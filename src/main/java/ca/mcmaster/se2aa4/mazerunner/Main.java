@@ -20,25 +20,19 @@ public class Main {
         fileOption.setRequired(true);
         options.addOption(fileOption);
 
+        // creating argument option for "-p" flag
+        options.addOption(new Option("p", true, "Maze path to be verified"));
+
         CommandLineParser parser = new DefaultParser(); // parser to read command-line arguments
 
         try {
             CommandLine cmd = parser.parse(options, args);
             String filePath = cmd.getOptionValue('i'); // assigns maze text file to filePath
-            logger.info("**** Reading the maze from file ", filePath);
+            Maze maze = new Maze(filePath);
+            Solver solver = new Solver();
+            Path path = solver.solve(maze);
+
             
-            BufferedReader reader = new BufferedReader(new FileReader(filePath)); // reads from retreived file
-            String line;
-            while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        logger.debug("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        logger.debug("PASS ");
-                    }
-                }
-                logger.debug(System.lineSeparator());
-            }
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
