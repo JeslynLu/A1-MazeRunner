@@ -11,7 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Maze  {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(Maze.class);
 
     private ArrayList<ArrayList<Integer>> maze = new ArrayList<>();
     private final Position entry;
@@ -45,12 +45,26 @@ public class Maze  {
         return maze;
     }
 
+    public Integer getVal(int x, int y){
+        return maze.get(x).get(y);
+    }
+
     /*  finds entrance of maze
         parameters - none
         returns - position of passage on the West border
     */ 
     public Position findEntry(){
-        Position pos = new Position(0,0);
+        Position pos = null;
+
+        for(int row = 0; row < maze.size(); row++){ // accessing first col, which is West border
+            Integer val = maze.get(row).get(0); 
+            
+            if(isPassage(val)){
+                pos = new Position(row,0);
+                break;
+            }
+        }
+        logger.info("Found entrance at position: (" + pos.getX() + "," + pos.getY() + ")");
         return pos;
     }
 
@@ -59,11 +73,35 @@ public class Maze  {
         returns - position of passage on the East border
     */ 
     public Position findExit(){
-        Position pos = new Position(0,0);
+        Position pos = null;
+        int mazeWidth = maze.size()-1;
+        for(int row = 0; row < maze.size(); row++){ // accessing first col, which is West border
+            Integer val = maze.get(row).get(mazeWidth); 
+            
+            if(isPassage(val)){
+                pos = new Position(row,mazeWidth);
+                break;
+            }
+        }
+        logger.info("Found exit at position: (" + pos.getX() + "," + pos.getY() + ")");
         return pos;
     }
 
-    public Integer get(int x, int y){
-        return maze.get(x).get(y);
+    public void printMaze(){
+        for(ArrayList<Integer> rows : maze){
+            for(Integer val : rows){
+                System.out.print(val + " ");
+            }
+            System.out.println(); 
+        }
+            
+    }
+
+    public boolean isPassage(int val){
+        if(val == 1){
+            return true;
+        }
+
+        return false;
     }
 }

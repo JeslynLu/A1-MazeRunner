@@ -11,7 +11,7 @@ public class Position {
 
     public Position(int x, int y){
         this.x = x;
-        this.y = x;
+        this.y = y;
     }
 
     public int getX(){
@@ -25,5 +25,9 @@ public class Position {
     }
     public void setY(int newY){
         this.y = newY;
+    }
+
+    public void print() {
+        System.out.println("Position: (" + x + ", " + y + ")");
     }
 }

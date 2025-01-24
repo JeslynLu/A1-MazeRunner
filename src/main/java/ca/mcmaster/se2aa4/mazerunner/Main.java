@@ -29,15 +29,16 @@ public class Main {
             CommandLine cmd = parser.parse(options, args);
             String filePath = cmd.getOptionValue('i'); // assigns maze text file to filePath
             Maze maze = new Maze(filePath);
-            Solver solver = new Solver();
-            Path path = solver.solve(maze);
+            maze.printMaze();
+            //Solver solver = new Solver();
+            //Path path = solver.solve(maze);
 
             
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
         logger.info("**** Computing path");
-        logger.error("PATH NOT COMPUTED");
+        //logger.error("PATH NOT COMPUTED");
         logger.info("** End of MazeRunner");
     }
 }
