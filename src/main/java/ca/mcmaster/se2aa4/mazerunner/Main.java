@@ -7,6 +7,9 @@ import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+//import main.java.ca.mcmaster.se2aa4.mazerunner.Maze;
+//import main.java.ca.mcmaster.se2aa4.mazerunner.Solver;
+
 public class Main {
 
     private static final Logger logger = LogManager.getLogger();
@@ -14,13 +17,13 @@ public class Main {
     public static void main(String[] args) {
         logger.info("** Starting Maze Runner");
 
-        // creating argument option for "-i" flag
+        // creating argument option for "-i" flag - solve maze input
         Options options = new Options();
         Option fileOption = new Option("i", true, "File that contains maze");
         fileOption.setRequired(true);
         options.addOption(fileOption);
 
-        // creating argument option for "-p" flag
+        // creating argument option for "-p" flag - verify path input
         options.addOption(new Option("p", true, "Maze path to be verified"));
 
         CommandLineParser parser = new DefaultParser(); // parser to read command-line arguments
@@ -29,9 +32,10 @@ public class Main {
             CommandLine cmd = parser.parse(options, args);
             String filePath = cmd.getOptionValue('i'); // assigns maze text file to filePath
             Maze maze = new Maze(filePath);
-            maze.printMaze();
-            //Solver solver = new Solver();
-            //Path path = solver.solve(maze);
+
+            Solver solver = new Solver();
+            Path path = solver.solve(maze);
+            System.out.println(path.getCanonicalPath());
 
             
         } catch(Exception e) {

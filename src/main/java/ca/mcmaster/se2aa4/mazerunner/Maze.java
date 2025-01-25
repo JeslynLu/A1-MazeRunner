@@ -93,8 +93,7 @@ public class Maze  {
                 System.out.print(val + " ");
             }
             System.out.println(); 
-        }
-            
+        }   
     }
 
     public boolean isPassage(int val){
