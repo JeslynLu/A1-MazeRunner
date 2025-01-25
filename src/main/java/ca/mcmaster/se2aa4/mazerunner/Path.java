@@ -11,18 +11,23 @@ public class Path {
         this.path = new StringBuilder("");
     }
 
+    public Path(String path){
+        this.path = new StringBuilder(path);
+    }
+
     public void addInstruction(String instruct){
         path.append(instruct);
-
     }
 
-    public StringBuilder getCanonicalPath(){
-        return this.path;
+    public char getInstruct(){
+        return this.path.charAt(0);
     }
 
-    public StringBuilder getFactorizedPath(){
-        return this.path;
+    public String getCanonicalPath(){
+        return this.path.toString();
     }
 
-
+    public String getFactorizedPath(){
+        return this.path.toString();
+    }
 }

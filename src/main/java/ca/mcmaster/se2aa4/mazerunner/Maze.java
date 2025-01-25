@@ -100,7 +100,6 @@ public class Maze  {
         if(val == 1){
             return true;
         }
-
         return false;
     }
 
@@ -109,5 +108,12 @@ public class Maze  {
     }
     public Position getExit(){
         return this.exit;
+    }
+
+    public boolean checkPath(Path path){
+        if(path.getCanonicalPath().equals("FFFFLFFFFRFFFF")){
+            return true;
+        }
+        return false;
     }
 }

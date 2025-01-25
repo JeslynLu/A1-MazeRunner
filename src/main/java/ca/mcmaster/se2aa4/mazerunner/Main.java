@@ -35,7 +35,20 @@ public class Main {
 
             Solver solver = new Solver();
             Path path = solver.solve(maze);
-            System.out.println(path.getCanonicalPath());
+            System.out.println("To explore the maze, follow the instructions: " + path.getCanonicalPath());
+
+            if(cmd.getOptionValue("p")!= null){
+                logger.info("Validating maze path");
+                Path pathToCheck = new Path(cmd.getOptionValue("p"));
+                boolean validPath = maze.checkPath(pathToCheck);
+
+                if(validPath){
+                    System.out.println("The path: " + pathToCheck.getCanonicalPath() + " is valid!");
+                }
+                else{
+                    System.out.println("The path: " + pathToCheck.getCanonicalPath() + " is NOT valid!");
+                }
+            }
 
             
         } catch(Exception e) {
