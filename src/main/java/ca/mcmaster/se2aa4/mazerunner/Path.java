@@ -5,17 +5,22 @@ import org.apache.logging.log4j.Logger;
 
 public class Path {
     private static final Logger logger = LogManager.getLogger();
-    private String path;
+    private StringBuilder path;
 
     public Path(){
-        
+        this.path = new StringBuilder("");
     }
 
-    public String getCanonicalPath(){
+    public void addInstruction(String instruct){
+        path.append(instruct);
+
+    }
+
+    public StringBuilder getCanonicalPath(){
         return this.path;
     }
 
-    public String getFactorizedPath(){
+    public StringBuilder getFactorizedPath(){
         return this.path;
     }
 

@@ -104,4 +104,11 @@ public class Maze  {
 
         return false;
     }
+
+    public Position getEntry(){
+        return this.entry;
+    }
+    public Position getExit(){
+        return this.exit;
+    }
 }

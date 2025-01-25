@@ -11,7 +11,9 @@ public class Solver {
     }
 
     public Path solve(Maze maze){
+        Position currentPos = maze.getEntry();
         Path path = new Path();
+        path.addInstruction("FFFFLFFFFRFFFF");
         return path;
     }
 }

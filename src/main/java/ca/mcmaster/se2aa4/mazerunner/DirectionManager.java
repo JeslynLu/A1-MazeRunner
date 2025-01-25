@@ -16,7 +16,7 @@ public class DirectionManager {
     }
 
     public DirectionManager(){
-        currentDir = startingDir;
+        this.currentDir = startingDir;
     }
 
     public Direction turnRight(){
