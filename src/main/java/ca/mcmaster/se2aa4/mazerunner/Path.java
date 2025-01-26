@@ -28,6 +28,28 @@ public class Path {
     }
 
     public String getFactorizedPath(){
-        return this.path.toString();
+        StringBuilder factorized = new StringBuilder("");
+
+        for(int i=0; i<path.length(); i++){
+            char current = path.charAt(i);
+            int count = 0; // count of the current instruction type
+
+            while(i<path.length() && path.charAt(i) == current){
+                count++;
+                i++;
+            }
+
+            if(count > 1){
+                factorized.append(count);
+            }
+            factorized.append(current);
+
+            i--;
+        } 
+        return factorized.toString();
+    }
+
+    public int getSize(){
+        return this.path.length();
     }
 }

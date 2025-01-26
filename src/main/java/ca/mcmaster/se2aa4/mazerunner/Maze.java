@@ -115,5 +115,18 @@ public class Maze  {
             return true;
         }
         return false;
+
+/*         Position currentPos = this.getEntry();
+        int instructLen = path.getSize();
+        StringBuilder pathCopy = new StringBuilder(path.toString());
+        
+        while(currentPos != this.getExit() && instructLen != 0){
+            String instruct = pathCopy.charAt(0).toString();
+            if(instruct.equals("L")){
+                
+            }
+
+
+        } */
     }
 }

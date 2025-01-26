@@ -7,9 +7,6 @@ import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-//import main.java.ca.mcmaster.se2aa4.mazerunner.Maze;
-//import main.java.ca.mcmaster.se2aa4.mazerunner.Solver;
-
 public class Main {
 
     private static final Logger logger = LogManager.getLogger();
@@ -36,6 +33,7 @@ public class Main {
             Solver solver = new Solver();
             Path path = solver.solve(maze);
             System.out.println("To explore the maze, follow the instructions: " + path.getCanonicalPath());
+            System.out.println("Factorized: " + path.getFactorizedPath());
 
             if(cmd.getOptionValue("p")!= null){
                 logger.info("Validating maze path");
