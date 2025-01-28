@@ -30,10 +30,13 @@ public class Main {
             String filePath = cmd.getOptionValue('i'); // assigns maze text file to filePath
             Maze maze = new Maze(filePath);
 
-            Solver solver = new Solver();
-            Path path = solver.solve(maze);
-            System.out.println("To explore the maze, follow the instructions: " + path.getCanonicalPath());
-            System.out.println("Factorized: " + path.getFactorizedPath());
+            maze.printMaze();
+
+            //Solver solver = new Solver();
+            //Path path = solver.solve(maze);
+
+            //System.out.println("To explore the maze, follow the instructions: " + path.getCanonicalPath());
+            //System.out.println("Factorized: " + path.getFactorizedPath());
 
             if(cmd.getOptionValue("p")!= null){
                 logger.info("Validating maze path");

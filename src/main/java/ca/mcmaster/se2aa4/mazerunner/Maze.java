@@ -33,15 +33,23 @@ public class Maze  {
         String line;
         while ((line = reader.readLine()) != null) {
             ArrayList<Integer> mazeRow = new ArrayList<>();
-            for (int idx = 0; idx < line.length(); idx++) {
-                if (line.charAt(idx) == '#') {
-                    mazeRow.add(0); // wall
-                } else if (line.charAt(idx) == ' ') {
-                    mazeRow.add(1); // passage
+
+            if(line.isEmpty()){ // add passages for empty new line
+                for(int idx = 0; idx < maze.get(0).size(); idx++){ 
+                    mazeRow.add(1); 
+                }
+            }else{
+                for (int idx = 0; idx < line.length(); idx++) {
+                    if (line.charAt(idx) == '#') {
+                        mazeRow.add(0); // wall
+                    } else if (line.charAt(idx) == ' ') {
+                        mazeRow.add(1); // passage
+                    }
                 }
             }
-                maze.add(mazeRow);
+            maze.add(mazeRow);
         }
+        reader.close();
         return maze;
     }
 
@@ -74,7 +82,7 @@ public class Maze  {
     */ 
     public Position findExit(){
         Position pos = null;
-        int mazeWidth = maze.size()-1;
+        int mazeWidth = (maze.get(0).size()) - 1;
         for(int row = 0; row < maze.size(); row++){ // accessing first col, which is West border
             Integer val = maze.get(row).get(mazeWidth); 
             
@@ -97,10 +105,7 @@ public class Maze  {
     }
 
     public boolean isPassage(int val){
-        if(val == 1){
-            return true;
-        }
-        return false;
+        return val == 1;
     }
 
     public Position getEntry(){
