@@ -32,15 +32,15 @@ public class Main {
 
             maze.printMaze();
 
-            //Solver solver = new Solver();
-            //Path path = solver.solve(maze);
+            Solver solver = new RightHandSolver();
+            MazePath path = solver.solve(maze);
 
-            //System.out.println("To explore the maze, follow the instructions: " + path.getCanonicalPath());
+            System.out.println("To explore the maze, follow the instructions: " + path.getCanonicalPath());
             //System.out.println("Factorized: " + path.getFactorizedPath());
 
             if(cmd.getOptionValue("p")!= null){
                 logger.info("Validating maze path");
-                Path pathToCheck = new Path(cmd.getOptionValue("p"));
+                MazePath pathToCheck = new MazePath(cmd.getOptionValue("p"));
                 boolean validPath = maze.checkPath(pathToCheck);
 
                 if(validPath){
@@ -53,10 +53,10 @@ public class Main {
 
             
         } catch(Exception e) {
-            logger.error("/!\\ An error has occured /!\\");
+            logger.error("/!\\ An error has occured /!\\" + e.getMessage());
+            logger.error("PATH NOT COMPUTED");
         }
-        logger.info("**** Computing path");
-        //logger.error("PATH NOT COMPUTED");
+    
         logger.info("** End of MazeRunner");
     }
 }

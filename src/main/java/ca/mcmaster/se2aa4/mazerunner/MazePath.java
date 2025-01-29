@@ -3,19 +3,19 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Path {
+public class MazePath {
     private static final Logger logger = LogManager.getLogger();
     private StringBuilder path;
 
-    public Path(){
+    public MazePath(){
         this.path = new StringBuilder("");
     }
 
-    public Path(String path){
+    public MazePath(String path){
         this.path = new StringBuilder(path);
     }
 
-    public void addInstruction(String instruct){
+    public void addInstruct(String instruct){
         path.append(instruct);
     }
 

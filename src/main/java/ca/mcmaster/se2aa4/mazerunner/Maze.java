@@ -3,6 +3,7 @@ package ca.mcmaster.se2aa4.mazerunner;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,6 +109,14 @@ public class Maze  {
         return val == 1;
     }
 
+    public boolean isPassage(Position pos){
+        return maze.get(pos.getY()).get(pos.getX())==1;
+    }
+
+    public boolean isWall(Position pos){
+        return maze.get(pos.getY()).get(pos.getX())==0;
+    }
+
     public Position getEntry(){
         return this.entry;
     }
@@ -115,23 +124,10 @@ public class Maze  {
         return this.exit;
     }
 
-    public boolean checkPath(Path path){
+    public boolean checkPath(MazePath path){
         if(path.getCanonicalPath().equals("FFFFLFFFFRFFFF")){
             return true;
         }
         return false;
-
-/*         Position currentPos = this.getEntry();
-        int instructLen = path.getSize();
-        StringBuilder pathCopy = new StringBuilder(path.toString());
-        
-        while(currentPos != this.getExit() && instructLen != 0){
-            String instruct = pathCopy.charAt(0).toString();
-            if(instruct.equals("L")){
-                
-            }
-
-
-        } */
     }
 }
