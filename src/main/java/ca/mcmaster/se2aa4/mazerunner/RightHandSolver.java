@@ -3,11 +3,11 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class RightHandSolver extends Solver{
+public class RightHandSolver implements  Solver{
     private static final Logger logger = LogManager.getLogger(Maze.class);
 
     public RightHandSolver(){
-        super();
+        
     }
 
     public MazePath solve(Maze maze){
@@ -15,9 +15,8 @@ public class RightHandSolver extends Solver{
         Direction dir = Direction.EAST; // assuming entry on always on West border
         MazePath path = new MazePath();
 
-        int count = 0;
         while(!currentPos.equals(maze.getExit())){
-            count ++;
+            // temporary positions for turning and moving forward
             Position forward = currentPos.move(dir);
             Position rightTurn = currentPos.move(dir.turnRight());
             Position leftTurn = currentPos.move(dir.turnLeft());
@@ -41,8 +40,7 @@ public class RightHandSolver extends Solver{
                 dir = dir.turnLeft();
                 path.addInstruct("L");
             }
-
-            //logger.info("currentPos: " + currentPos.print() + "\n path: " + path.getCanonicalPath() + "\n\n");
+            logger.debug("Current Pos: " + currentPos.toString() + "\n Path: " + path.getCanonical() + "\n");
         }
         return path;
     }

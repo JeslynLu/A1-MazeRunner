@@ -14,15 +14,11 @@ public class Maze  {
     private ArrayList<ArrayList<Integer>> maze = new ArrayList<>();
     private final Position entry;
     private final Position exit;
-    private int mazeWidth;
 
     public Maze(String filePath) throws Exception{
         this.maze = parseMaze(filePath);
-        this.printMaze();
         this.entry = findEntry();
         this.exit = findExit();
-        this.mazeWidth = (this.maze.get(0).size()) - 1;
-        
     }
 
     /*  extracts maze walls and passages from maze file
@@ -38,10 +34,8 @@ public class Maze  {
         while ((line = reader.readLine()) != null) {
             ArrayList<Integer> mazeRow = new ArrayList<>();
 
-            line = line.replaceAll("\\t", "  "); // replacing tabs with spaces
-
             if(line.isEmpty()){ // add passages for empty new line
-                for(int idx = 0; idx < mazeWidth; idx++){ 
+                for(int idx = 0; idx < parsedMaze.get(0).size(); idx++){ 
                     mazeRow.add(1); 
                 }
             }else{
@@ -88,6 +82,7 @@ public class Maze  {
     */ 
     public Position findExit(){
         Position pos = null;
+        int mazeWidth = this.maze.get(0).size() - 1;
 
         for(int i = 0; i < maze.size(); i++){ // accessing last col, which is East border
             Integer val = maze.get(i).get(mazeWidth); 
@@ -141,7 +136,7 @@ public class Maze  {
     }
 
     public boolean checkPath(MazePath path){
-        if(path.getCanonicalPath().equals("FFFFLFFFFRFFFF")){
+        if(path.getCanonical().equals("FFFFLFFFFRFFFF")){
             return true;
         }
         return false;
