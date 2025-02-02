@@ -19,7 +19,6 @@ public class RightHandSolver implements  Solver{
             // temporary positions for turning and moving forward
             Position forward = currentPos.move(dir);
             Position rightTurn = currentPos.move(dir.turnRight());
-            Position leftTurn = currentPos.move(dir.turnLeft());
 
             // if can move forward and supported by a wall on its right
             if(maze.isPassage(forward) && !maze.isPassage(rightTurn)){

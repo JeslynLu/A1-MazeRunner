@@ -8,12 +8,13 @@ public class MazePath {
     private StringBuilder path;
 
     public MazePath(){
+        logger.info("empty");
         this.path = new StringBuilder("");
     }
 
-    public MazePath(String path){
-        String cleanPath = expandFactorized(path);
-        pathFormatCheck(cleanPath);
+    public MazePath(String newPath){
+        String cleanPath = expandFactorized(newPath); // cleaning up path input
+        pathFormatCheck(cleanPath); // ensuring path input format is valid
         this.path = new StringBuilder(cleanPath);
     }
 
@@ -50,7 +51,7 @@ public class MazePath {
 
             else if(Character.isDigit(current)){
                 int num = Character.getNumericValue(current); // digit value
-                char nextInstruct = path.charAt(i+1); // instruction followed by digit
+                char nextInstruct = newPath.charAt(i+1); // instruction followed by digit
 
                 for(int j=0; j < num; j++){
                     expanded.append(nextInstruct);
@@ -61,8 +62,11 @@ public class MazePath {
                 expanded.append(current);
             }
         } 
-        logger.info(expanded.toString());
         return expanded.toString();
+    }
+
+    public String getExpanded(){
+        return this.path.toString();
     }
     
 
@@ -77,7 +81,10 @@ public class MazePath {
                 i++;
             }
 
-            canonical.append(" ");
+            if(i!=path.length()){ // adding spaces between diff instruct types
+                canonical.append(" ");
+            }
+
             i--;
         } 
         return canonical.toString();

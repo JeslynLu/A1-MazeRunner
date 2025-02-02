@@ -34,17 +34,19 @@ public class Maze  {
         while ((line = reader.readLine()) != null) {
             ArrayList<Integer> mazeRow = new ArrayList<>();
 
-            if(line.isEmpty()){ // add passages for empty new line
-                for(int idx = 0; idx < parsedMaze.get(0).size(); idx++){ 
-                    mazeRow.add(1); 
+            for (int idx = 0; idx < line.length(); idx++) {
+                if (line.charAt(idx) == '#') {
+                    mazeRow.add(0); // wall
+                } else if (line.charAt(idx) == ' ') {
+                    mazeRow.add(1); // passage
                 }
-            }else{
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        mazeRow.add(0); // wall
-                    } else if (line.charAt(idx) == ' ') {
-                        mazeRow.add(1); // passage
-                    }
+            }
+
+            // ensure row meets required length after parsing
+            if (!parsedMaze.isEmpty() && mazeRow.size() < parsedMaze.get(0).size()) {
+                int requiredLen = parsedMaze.get(0).size();
+                while (mazeRow.size() < requiredLen) {
+                    mazeRow.add(1); // fill missing spaces with passages
                 }
             }
             parsedMaze.add(mazeRow);
@@ -96,30 +98,30 @@ public class Maze  {
         return pos;
     }
 
-    public void printMaze(){
+    public String toString(){
+        StringBuilder mazeStr = new StringBuilder();
+
         for(ArrayList<Integer> rows : maze){
             for(Integer val : rows){
-                System.out.print(val + " ");
+                mazeStr.append(val).append(" ");
             }
-            System.out.println(); 
+            mazeStr.append("\n");
         }   
+        return mazeStr.toString();
     }
 
     public boolean isPassage(int val){
         return val == 1;
     }
 
-    public boolean isPassage(Position pos){
-        try {
-            this.inBounds(pos);
-            Integer val = maze.get(pos.getY()).get(pos.getX());
-            return val == 1;
-        } catch (IllegalArgumentException e) {
-            logger.error("Position out of bounds: " + pos.print());
-            return false;  
-        }
+    public boolean isPassage(Position pos) {
+        if(this.inBounds(pos)){
+            return maze.get(pos.getY()).get(pos.getX()) == 1; 
+        }else{
+            logger.error("Position out of bounds: " + pos);
+            return false;
+        }       
     }
-
 
     public Position getEntry(){
         return this.entry;
@@ -128,17 +130,64 @@ public class Maze  {
         return this.exit;
     }
 
-    public boolean inBounds(Position pos) throws IllegalArgumentException{
-        if (pos.getX() < 0 || pos.getX() >= maze.get(0).size() || pos.getY() < 0 || pos.getY() >= maze.size()) {
-            throw new IllegalArgumentException("Position (" + pos.getX() + ", " + pos.getY() + ") is out of bounds");
+    public boolean inBounds(Position pos) {
+        return pos.getX() >= 0 && pos.getX() < maze.get(0).size() && pos.getY() >= 0 && pos.getY() < maze.size();
+    }   
+
+    public void assertBounds(Position pos) {
+        if (!inBounds(pos)) {
+            throw new IllegalArgumentException("Position out of bounds: " + pos);
         }
-        return true;
+    }   
+
+
+    public boolean checkPath(MazePath path){ 
+        String pathStr = path.getExpanded();
+        logger.info("Checking path: " + pathStr);
+
+        // checking for entrance/exit directed both ways
+        boolean validWestEntry = checkPath(this.entry, this.exit, Direction.EAST, pathStr);
+        boolean validEastEntry = checkPath(this.exit, this.entry, Direction.WEST, pathStr); 
+
+        logger.info("Path check results - East: " + validWestEntry + ", West: " + validEastEntry);
+
+        return validWestEntry || validEastEntry;
     }
 
-    public boolean checkPath(MazePath path){
-        if(path.getCanonical().equals("FFFFLFFFFRFFFF")){
-            return true;
+    public boolean checkPath(Position newEntry, Position newExit, Direction dir, String path){
+        StringBuilder copyPath = new StringBuilder(path);
+        Position currentPos = newEntry;
+        Position move = null;
+
+        while(copyPath.length() > 0){
+            char instruct = copyPath.charAt(0);
+
+            if (instruct == 'F') {
+                move = currentPos.move(dir);
+            } 
+            else if (instruct == 'L') {
+                dir = dir.turnLeft();
+            } 
+            else if (instruct == 'R') {
+                dir = dir.turnRight();
+            } 
+            else {
+                logger.warn("Invalid instruction found: " + instruct);
+                return false;
+            }
+
+            logger.info("checkpath " + move.toString() + " dir " + dir);
+
+            if(this.inBounds(move) && this.isPassage(move)){
+                currentPos = move;
+                copyPath.deleteCharAt(0);
+            }
+            else{
+                logger.error("Invalid move: " + move.toString() + " in direction " + dir);
+                return false;
+            }  
         }
-        return false;
+
+        return currentPos.equals(newExit);
     }
 }

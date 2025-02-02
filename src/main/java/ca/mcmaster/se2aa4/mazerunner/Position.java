@@ -20,17 +20,6 @@ public class Position {
     public int getY(){
         return this.y;
     }
-    public void moveX(int newX){
-        this.x += newX;
-    }
-    public void moveY(int newY){
-        this.y += newY;
-    }
-
-    public void movePosition(int newX, int newY){
-        moveX(newX);
-        moveY(newY);
-    }
 
     public Position getPosition(){
         return this;
@@ -40,20 +29,11 @@ public class Position {
         int newX = this.x;
         int newY = this.y;
         switch (dir) {
-            case NORTH:
-                newY -= 1;
-                break;
-            case EAST:
-                newX += 1;
-                break;
-            case WEST:
-                newX -= 1;
-                break;
-            case SOUTH:
-                newY += 1;
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + dir);
+            case NORTH -> newY -= 1;
+            case EAST -> newX += 1;
+            case WEST -> newX -= 1;
+            case SOUTH -> newY += 1;
+            default -> throw new IllegalStateException("Unexpected value: " + dir);
         }
         return new Position(newX, newY);  
     }
@@ -62,7 +42,7 @@ public class Position {
         return(this.getX() == pos.getX() && this.getY() == pos.getY());
     }
 
-    public String print() {
+    public String toString() {
         return "Position: (" + this.x + ", " + this.y + ")";
     }
 }

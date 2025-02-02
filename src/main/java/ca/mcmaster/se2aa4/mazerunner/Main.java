@@ -27,12 +27,10 @@ public class Main {
             String filePath = cmd.getOptionValue('i'); // assigns maze text file to filePath
             Maze maze = new Maze(filePath);
 
-            maze.printMaze();
+            logger.info("\n\n"+maze.toString());
 
             Solver solver = new RightHandSolver();
             MazePath path = solver.solve(maze);
-
-            MazePath test = new MazePath(" ");
 
             System.out.println("Canonical form: " + path.getCanonical());
             System.out.println("Factorized form: " + path.getFactorized());
