@@ -10,31 +10,37 @@ public enum Direction{ // direction you are facing
 
     public Direction turnRight(){
         switch(this){
-            case NORTH:
+            case NORTH -> {
                 return EAST;
-            case EAST:
+                }
+            case EAST -> {
                 return SOUTH;
-            case WEST:
+                }
+            case WEST -> {
                 return NORTH;
-            case SOUTH:
+                }
+            case SOUTH -> {
                 return WEST;
-            default:
-                throw new IllegalStateException("Unexpected value: " + this);
+                }
+            default -> throw new IllegalStateException("Unexpected value: " + this);
         }
     }
 
     public Direction turnLeft(){
         switch(this){
-            case NORTH:
+            case NORTH -> {
                 return WEST;
-            case EAST:
+                }
+            case EAST -> {
                 return NORTH;
-            case WEST:
+                }
+            case WEST -> {
                 return SOUTH;
-            case SOUTH:
+                }
+            case SOUTH -> {
                 return EAST;
-            default:
-                throw new IllegalStateException("Unexpected value: " + this);
+                }
+            default -> throw new IllegalStateException("Unexpected value: " + this);
         }
     }
 }

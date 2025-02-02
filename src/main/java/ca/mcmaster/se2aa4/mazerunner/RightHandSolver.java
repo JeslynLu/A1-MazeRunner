@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class RightHandSolver extends Solver{
+    private static final Logger logger = LogManager.getLogger(Maze.class);
 
     public RightHandSolver(){
         super();
@@ -14,29 +15,35 @@ public class RightHandSolver extends Solver{
         Direction dir = Direction.EAST; // assuming entry on always on West border
         MazePath path = new MazePath();
 
+        int count = 0;
         while(!currentPos.equals(maze.getExit())){
-            
-            // if can move forward and supported by a wall
-            if(maze.isPassage(currentPos.move(dir)) && maze.isWall(currentPos.move(dir.turnRight()))){
+            count ++;
+            Position forward = currentPos.move(dir);
+            Position rightTurn = currentPos.move(dir.turnRight());
+            Position leftTurn = currentPos.move(dir.turnLeft());
+
+            // if can move forward and supported by a wall on its right
+            if(maze.isPassage(forward) && !maze.isPassage(rightTurn)){
                 path.addInstruct("F");
-                currentPos = currentPos.move(dir);
+                currentPos = forward;
             } 
-            else if(maze.isPassage(currentPos.move(dir.turnRight()))){
+
+            // if can turn right and move forward
+            else if(maze.isPassage(rightTurn)){
                 dir = dir.turnRight();
                 path.addInstruct("R");
                 path.addInstruct("F");
-                currentPos = currentPos.move(dir);
+                currentPos = rightTurn;
             }
-            else if(maze.isPassage(currentPos.move(dir.turnLeft()))){
+
+            // else turn left
+            else{
                 dir = dir.turnLeft();
                 path.addInstruct("L");
-                path.addInstruct("F");
-                currentPos = currentPos.move(dir);
             }
-            System.out.println("currentPos: " + currentPos.print() + "\n path: " + path.getCanonicalPath());
-        }
-        //logger.debug("currentPos: " + currentPos.print() + "\n path: " + path.getCanonicalPath());
 
+            //logger.info("currentPos: " + currentPos.print() + "\n path: " + path.getCanonicalPath() + "\n\n");
+        }
         return path;
     }
 }

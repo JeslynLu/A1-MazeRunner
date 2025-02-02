@@ -1,11 +1,8 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
@@ -17,11 +14,15 @@ public class Maze  {
     private ArrayList<ArrayList<Integer>> maze = new ArrayList<>();
     private final Position entry;
     private final Position exit;
+    private int mazeWidth;
 
     public Maze(String filePath) throws Exception{
         this.maze = parseMaze(filePath);
+        this.printMaze();
         this.entry = findEntry();
         this.exit = findExit();
+        this.mazeWidth = (this.maze.get(0).size()) - 1;
+        
     }
 
     /*  extracts maze walls and passages from maze file
@@ -30,13 +31,17 @@ public class Maze  {
     */ 
     public ArrayList<ArrayList<Integer>> parseMaze(String filePath) throws Exception{
         logger.info("**** Reading the maze from file " + filePath);  
+        ArrayList<ArrayList<Integer>> parsedMaze = new ArrayList<>();
+
         BufferedReader reader = new BufferedReader(new FileReader(filePath)); // reads from retreived file
         String line;
         while ((line = reader.readLine()) != null) {
             ArrayList<Integer> mazeRow = new ArrayList<>();
 
+            line = line.replaceAll("\\t", "  "); // replacing tabs with spaces
+
             if(line.isEmpty()){ // add passages for empty new line
-                for(int idx = 0; idx < maze.get(0).size(); idx++){ 
+                for(int idx = 0; idx < mazeWidth; idx++){ 
                     mazeRow.add(1); 
                 }
             }else{
@@ -48,14 +53,14 @@ public class Maze  {
                     }
                 }
             }
-            maze.add(mazeRow);
+            parsedMaze.add(mazeRow);
         }
         reader.close();
-        return maze;
+        return parsedMaze;
     }
 
     public Integer getVal(int x, int y){
-        return maze.get(x).get(y);
+        return maze.get(y).get(x);
     }
 
     /*  finds entrance of maze
@@ -65,11 +70,11 @@ public class Maze  {
     public Position findEntry(){
         Position pos = null;
 
-        for(int row = 0; row < maze.size(); row++){ // accessing first col, which is West border
-            Integer val = maze.get(row).get(0); 
+        for(int i = 0; i < maze.size(); i++){ // accessing first col, which is West border
+            Integer val = maze.get(i).get(0); 
             
             if(isPassage(val)){
-                pos = new Position(row,0);
+                pos = new Position(0, i);
                 break;
             }
         }
@@ -83,12 +88,12 @@ public class Maze  {
     */ 
     public Position findExit(){
         Position pos = null;
-        int mazeWidth = (maze.get(0).size()) - 1;
-        for(int row = 0; row < maze.size(); row++){ // accessing first col, which is West border
-            Integer val = maze.get(row).get(mazeWidth); 
+
+        for(int i = 0; i < maze.size(); i++){ // accessing last col, which is East border
+            Integer val = maze.get(i).get(mazeWidth); 
             
             if(isPassage(val)){
-                pos = new Position(row,mazeWidth);
+                pos = new Position(mazeWidth, i);
                 break;
             }
         }
@@ -110,18 +115,29 @@ public class Maze  {
     }
 
     public boolean isPassage(Position pos){
-        return maze.get(pos.getY()).get(pos.getX())==1;
+        try {
+            this.inBounds(pos);
+            Integer val = maze.get(pos.getY()).get(pos.getX());
+            return val == 1;
+        } catch (IllegalArgumentException e) {
+            logger.error("Position out of bounds: " + pos.print());
+            return false;  
+        }
     }
 
-    public boolean isWall(Position pos){
-        return maze.get(pos.getY()).get(pos.getX())==0;
-    }
 
     public Position getEntry(){
         return this.entry;
     }
     public Position getExit(){
         return this.exit;
+    }
+
+    public boolean inBounds(Position pos) throws IllegalArgumentException{
+        if (pos.getX() < 0 || pos.getX() >= maze.get(0).size() || pos.getY() < 0 || pos.getY() >= maze.size()) {
+            throw new IllegalArgumentException("Position (" + pos.getX() + ", " + pos.getY() + ") is out of bounds");
+        }
+        return true;
     }
 
     public boolean checkPath(MazePath path){
