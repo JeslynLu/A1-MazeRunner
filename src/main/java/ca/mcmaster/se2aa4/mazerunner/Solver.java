@@ -8,6 +8,6 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 public interface Solver {
     // solve solves the given maze and returns the path taken
-    public MazePath solve(Maze maze);
+    MazePath solve(MazeNavigator maze);
     
 } 

@@ -13,7 +13,7 @@ public class RightHandSolver implements Solver {
     private static final Logger logger = LogManager.getLogger(Maze.class);
 
     // solve solves the given maze using the right-hand rule algorithm to return the solution path
-    public MazePath solve(Maze maze){
+    public MazePath solve(MazeNavigator maze){
         Position currentPos = maze.getEntry();
         Direction dir = Direction.EAST; // assuming entry on always on West border
         MazePath path = new MazePath();

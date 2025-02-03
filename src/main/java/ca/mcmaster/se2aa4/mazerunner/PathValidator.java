@@ -12,9 +12,9 @@ import org.apache.logging.log4j.Logger;
 
 public class PathValidator {
     private static final Logger logger = LogManager.getLogger();
-    private Maze maze; // maze to check path for
+    private MazeNavigator maze; // maze to check path for
 
-    public PathValidator(Maze maze){
+    public PathValidator(MazeNavigator maze){
         this.maze = maze;
     }
 

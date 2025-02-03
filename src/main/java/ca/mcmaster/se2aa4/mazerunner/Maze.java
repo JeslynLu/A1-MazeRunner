@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
  * Maze represents the structure of the maze, including its layout, passages, walls, entry, and exit points
  */
 
-public class Maze  {
+public class Maze implements MazeNavigator {
     private static final Logger logger = LogManager.getLogger(Maze.class);
 
     private ArrayList<ArrayList<Cell>> maze = new ArrayList<>(); // 2D list to represent a maze
