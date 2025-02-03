@@ -3,13 +3,16 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class RightHandSolver implements  Solver{
+/**
+ * Jeslyn Lu
+ * lu196
+ * RightHandSolver implements Solver and uses the right-hand rule algorithm to solve a maze
+ */
+
+public class RightHandSolver implements Solver {
     private static final Logger logger = LogManager.getLogger(Maze.class);
 
-    public RightHandSolver(){
-        
-    }
-
+    // solve solves the given maze using the right-hand rule algorithm to return the solution path
     public MazePath solve(Maze maze){
         Position currentPos = maze.getEntry();
         Direction dir = Direction.EAST; // assuming entry on always on West border

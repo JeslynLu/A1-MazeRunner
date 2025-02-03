@@ -8,13 +8,19 @@ import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Jeslyn Lu
+ * lu196
+ * Maze represents the structure of the maze, including its layout, passages, walls, entry, and exit points
+ */
+
 public class Maze  {
     private static final Logger logger = LogManager.getLogger(Maze.class);
 
-    private ArrayList<ArrayList<Cell>> maze = new ArrayList<>();
-    private final Position entry;
-    private final Position exit;
-    private enum Cell {
+    private ArrayList<ArrayList<Cell>> maze = new ArrayList<>(); // 2D list to represent a maze
+    private final Position entry; // maze entrance
+    private final Position exit; // maze exit
+    private enum Cell { // two possible types of maze cells
         WALL, PASSAGE
     }
 
@@ -24,10 +30,7 @@ public class Maze  {
         this.exit = findExit();
     }
 
-    /*  extracts maze walls and passages from maze file
-        parameters - maze file to extract info from
-        returns - 2D array list, where 0 is wall and 1 is passage
-    */ 
+    //  parseMaze returns 2D list with extracted maze walls and passages from inputted maze file
     public ArrayList<ArrayList<Cell>> parseMaze(String filePath) throws Exception{
         logger.info("**** Reading the maze from file " + filePath);  
         ArrayList<ArrayList<Cell>> parsedMaze = new ArrayList<>();
@@ -58,14 +61,7 @@ public class Maze  {
         return parsedMaze;
     }
 
-    public Cell getCell(int x, int y) {
-            return maze.get(y).get(x);
-    }
-
-    /*  finds entrance of maze
-        parameters - none
-        returns - position of passage on the West border
-    */ 
+    //  findEntry returns entrance of maze - passage on the West border
     public Position findEntry(){
         Position pos = null;
 
@@ -81,10 +77,7 @@ public class Maze  {
         return pos;
     }
 
-    /*  finds exit of maze
-        parameters - none
-        returns - position of passage on the East border
-    */ 
+    //  findExit returns exit of maze - passage on the East border
     public Position findExit(){
         Position pos = null;
         int mazeWidth = this.maze.get(0).size() - 1;
@@ -101,18 +94,7 @@ public class Maze  {
         return pos;
     }
 
-    public String toString(){
-        StringBuilder mazeStr = new StringBuilder();
-
-        for (ArrayList<Cell> rows : maze) {
-            for (Cell cell : rows) {
-                mazeStr.append(cell == Cell.PASSAGE ? " " : "#");
-            }
-            mazeStr.append("\n");
-        }   
-        return mazeStr.toString();
-    }
-
+    // isPassage checks if a given cell is a passage
     public boolean isPassage(Cell cell) {
         return cell == Cell.PASSAGE;
     }
@@ -128,6 +110,11 @@ public class Maze  {
         }
     }
 
+    // inBounds checks if the position is within the maze bounds
+    public boolean inBounds(Position pos) {
+        return pos.getX() >= 0 && pos.getX() < maze.get(0).size() && pos.getY() >= 0 && pos.getY() < maze.size();
+    }  
+
     public Position getEntry(){
         return this.entry;
     }
@@ -135,63 +122,16 @@ public class Maze  {
         return this.exit;
     }
 
-    public boolean inBounds(Position pos) {
-        return pos.getX() >= 0 && pos.getX() < maze.get(0).size() && pos.getY() >= 0 && pos.getY() < maze.size();
-    }   
+    @Override
+    public String toString(){
+        StringBuilder mazeStr = new StringBuilder();
 
-    public void assertBounds(Position pos) {
-        if (!inBounds(pos)) {
-            throw new IllegalArgumentException("Position out of bounds: " + pos);
-        }
-    }   
-
-    public boolean checkPath(MazePath path){ 
-        String pathStr = path.getExpanded();
-        logger.info("Checking path: " + pathStr);
-
-        // checking for entrance/exit directed both ways
-        boolean validWestEntry = checkPath(this.entry, this.exit, Direction.EAST, pathStr);
-        boolean validEastEntry = checkPath(this.exit, this.entry, Direction.WEST, pathStr); 
-
-        logger.info("Path check results - East: " + validWestEntry + ", West: " + validEastEntry);
-
-        return validWestEntry || validEastEntry;
-    }
-
-    public boolean checkPath(Position newEntry, Position newExit, Direction dir, String path){
-        StringBuilder copyPath = new StringBuilder(path);
-        Position currentPos = newEntry;
-        Position move = null;
-
-        while(copyPath.length() > 0){
-            char instruct = copyPath.charAt(0);
-
-            if (instruct == 'F') {
-                move = currentPos.move(dir);
-            } 
-            else if (instruct == 'L') {
-                dir = dir.turnLeft();
-            } 
-            else if (instruct == 'R') {
-                dir = dir.turnRight();
-            } 
-            else {
-                logger.warn("Invalid instruction found: " + instruct);
-                return false;
+        for (ArrayList<Cell> rows : maze) {
+            for (Cell cell : rows) {
+                mazeStr.append(cell == Cell.PASSAGE ? " " : "#");
             }
-
-            logger.info("checkpath " + move.toString() + " dir " + dir);
-
-            if(this.inBounds(move) && this.isPassage(move)){
-                currentPos = move;
-                copyPath.deleteCharAt(0);
-            }
-            else{
-                logger.error("Invalid move: " + move.toString() + " in direction " + dir);
-                return false;
-            }  
-        }
-
-        return currentPos.equals(newExit);
-    }
+            mazeStr.append("\n");
+        }   
+        return mazeStr.toString();
+    } 
 }

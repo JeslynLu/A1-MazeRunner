@@ -3,57 +3,59 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Jeslyn Lu
+ * lu196
+ * MazePath represents a path through the maze using a sequence of movement instructions
+ */
+
 public class MazePath {
     private static final Logger logger = LogManager.getLogger();
-    private StringBuilder path;
+    private StringBuilder path; // sequence of instructions
 
     public MazePath(){
-        logger.info("empty");
         this.path = new StringBuilder("");
     }
 
+    // Constructor cleans up and validates the input format
     public MazePath(String newPath){
         String cleanPath = expandFactorized(newPath); // cleaning up path input
         pathFormatCheck(cleanPath); // ensuring path input format is valid
         this.path = new StringBuilder(cleanPath);
     }
 
-    public void addInstruct(String instruct){
-        path.append(instruct);
-    }
-
-    public char getInstruct(){
-        return this.path.charAt(0);
-    }
-
+    // pathFormatCheck returns if only valid instructions are in inputted string
     public boolean pathFormatCheck(String newPath){
         if(newPath.equals("")){
-            throw new IllegalArgumentException("Path cannot be empty.");
+            logger.error("Path cannot be empty.");
+            return false;
         }
-        for(int i=0; i<newPath.length(); i++){
+        // ensuring path characters are valid ones
+        for(int i = 0; i < newPath.length(); i++){
             char instruct = newPath.charAt(i);
             if(instruct != ' ' && instruct != 'F' && instruct != 'L' && instruct != 'R'){
-                throw new IllegalArgumentException("\"" + instruct + "\" is not a valid path instruction.");
+                logger.error("\"" + instruct + "\" is not a valid path instruction.");
+                return false;
             }
         }
         return true;
     }
 
+    // expandFactorized expands a factorized path string into a normal form
     public String expandFactorized(String newPath){
         StringBuilder expanded = new StringBuilder("");
 
-        for(int i=0; i<newPath.length(); i++){
+        for(int i = 0; i < newPath.length(); i++){
             char current = newPath.charAt(i);
             
-            if(Character.isWhitespace(current)){ // ignore spaces
+            if(Character.isWhitespace(current)){ // ensures no spaces are added
                 expanded.append("");
             }
-
             else if(Character.isDigit(current)){
                 int num = Character.getNumericValue(current); // digit value
-                char nextInstruct = newPath.charAt(i+1); // instruction followed by digit
+                char nextInstruct = newPath.charAt(i+1); // instruction after digit
 
-                for(int j=0; j < num; j++){
+                for(int j = 0; j < num; j++){
                     expanded.append(nextInstruct);
                 }
                 i++;
@@ -65,23 +67,24 @@ public class MazePath {
         return expanded.toString();
     }
 
+    // getExpanded returns the expanded version of the stored path
     public String getExpanded(){
         return this.path.toString();
     }
-    
 
-    public String getCanonical(){ // formatting canonical path form
+    // getCanonical returns the canonical path formatted with spaces
+    public String getCanonical(){ 
         StringBuilder canonical = new StringBuilder("");
 
-        for(int i=0; i<path.length(); i++){
-            char current = path.charAt(i); // current instruction type
+        for(int i = 0; i < path.length(); i++){
+            char current = path.charAt(i); // Current instruction type
 
-            while(i<path.length() && path.charAt(i) == current){
+            while(i < path.length() && path.charAt(i) == current){
                 canonical.append(current);
                 i++;
             }
 
-            if(i!=path.length()){ // adding spaces between diff instruct types
+            if(i != path.length()){ // Adding spaces between different instruction types
                 canonical.append(" ");
             }
 
@@ -90,14 +93,15 @@ public class MazePath {
         return canonical.toString();
     }
 
-    public String getFactorized(){ // converting canonical to factorized form
+    // getFactorized converts the canonical path into a factorized format and returns factorized form
+    public String getFactorized(){ 
         StringBuilder factorized = new StringBuilder("");
 
-        for(int i=0; i<path.length(); i++){
+        for(int i = 0; i < path.length(); i++){
             char current = path.charAt(i);
-            int count = 0; // count of the current instruction type
+            int count = 0; // Count occurrences of the current instruction
 
-            while(i<path.length() && path.charAt(i) == current){
+            while(i < path.length() && path.charAt(i) == current){
                 count++;
                 i++;
             }
@@ -112,7 +116,13 @@ public class MazePath {
         return factorized.toString();
     }
 
-    public int getSize(){
-        return this.path.length();
+    // addInstruct adds inputted instruction onto end of path
+    public void addInstruct(String instruct){
+        path.append(instruct);
+    }
+
+    // getInstruct returns first instruction of path
+    public char getInstruct(){
+        return this.path.charAt(0);
     }
 }
