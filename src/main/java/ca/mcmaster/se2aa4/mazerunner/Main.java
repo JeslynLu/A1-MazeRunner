@@ -41,10 +41,10 @@ public class Main {
                 boolean validPath = maze.checkPath(pathToCheck);
 
                 if(validPath){
-                    System.out.println("The path: " + pathToCheck.getCanonical() + " is valid!");
+                    System.out.println("correct path");
                 }
                 else{
-                    System.out.println("The path: " + pathToCheck.getCanonical() + " is NOT valid!");
+                    System.out.println("incorrect path");
                 }
             }
 

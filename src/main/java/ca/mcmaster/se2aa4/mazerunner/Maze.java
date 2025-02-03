@@ -11,9 +11,12 @@ import org.apache.logging.log4j.Logger;
 public class Maze  {
     private static final Logger logger = LogManager.getLogger(Maze.class);
 
-    private ArrayList<ArrayList<Integer>> maze = new ArrayList<>();
+    private ArrayList<ArrayList<Cell>> maze = new ArrayList<>();
     private final Position entry;
     private final Position exit;
+    private enum Cell {
+        WALL, PASSAGE
+    }
 
     public Maze(String filePath) throws Exception{
         this.maze = parseMaze(filePath);
@@ -25,20 +28,20 @@ public class Maze  {
         parameters - maze file to extract info from
         returns - 2D array list, where 0 is wall and 1 is passage
     */ 
-    public ArrayList<ArrayList<Integer>> parseMaze(String filePath) throws Exception{
+    public ArrayList<ArrayList<Cell>> parseMaze(String filePath) throws Exception{
         logger.info("**** Reading the maze from file " + filePath);  
-        ArrayList<ArrayList<Integer>> parsedMaze = new ArrayList<>();
+        ArrayList<ArrayList<Cell>> parsedMaze = new ArrayList<>();
 
         BufferedReader reader = new BufferedReader(new FileReader(filePath)); // reads from retreived file
         String line;
         while ((line = reader.readLine()) != null) {
-            ArrayList<Integer> mazeRow = new ArrayList<>();
+            ArrayList<Cell> mazeRow = new ArrayList<>();
 
             for (int idx = 0; idx < line.length(); idx++) {
                 if (line.charAt(idx) == '#') {
-                    mazeRow.add(0); // wall
+                    mazeRow.add(Cell.WALL); // wall
                 } else if (line.charAt(idx) == ' ') {
-                    mazeRow.add(1); // passage
+                    mazeRow.add(Cell.PASSAGE); // passage
                 }
             }
 
@@ -46,7 +49,7 @@ public class Maze  {
             if (!parsedMaze.isEmpty() && mazeRow.size() < parsedMaze.get(0).size()) {
                 int requiredLen = parsedMaze.get(0).size();
                 while (mazeRow.size() < requiredLen) {
-                    mazeRow.add(1); // fill missing spaces with passages
+                    mazeRow.add(Cell.PASSAGE); // fill missing spaces with passages
                 }
             }
             parsedMaze.add(mazeRow);
@@ -55,8 +58,8 @@ public class Maze  {
         return parsedMaze;
     }
 
-    public Integer getVal(int x, int y){
-        return maze.get(y).get(x);
+    public Cell getCell(int x, int y) {
+            return maze.get(y).get(x);
     }
 
     /*  finds entrance of maze
@@ -67,9 +70,9 @@ public class Maze  {
         Position pos = null;
 
         for(int i = 0; i < maze.size(); i++){ // accessing first col, which is West border
-            Integer val = maze.get(i).get(0); 
+            Cell cell = maze.get(i).get(0); 
             
-            if(isPassage(val)){
+            if(isPassage(cell)){
                 pos = new Position(0, i);
                 break;
             }
@@ -87,9 +90,9 @@ public class Maze  {
         int mazeWidth = this.maze.get(0).size() - 1;
 
         for(int i = 0; i < maze.size(); i++){ // accessing last col, which is East border
-            Integer val = maze.get(i).get(mazeWidth); 
-            
-            if(isPassage(val)){
+            Cell cell = maze.get(i).get(mazeWidth); 
+
+            if (isPassage(cell)) {
                 pos = new Position(mazeWidth, i);
                 break;
             }
@@ -101,26 +104,28 @@ public class Maze  {
     public String toString(){
         StringBuilder mazeStr = new StringBuilder();
 
-        for(ArrayList<Integer> rows : maze){
-            for(Integer val : rows){
-                mazeStr.append(val).append(" ");
+        for (ArrayList<Cell> rows : maze) {
+            for (Cell cell : rows) {
+                mazeStr.append(cell == Cell.PASSAGE ? " " : "#");
             }
             mazeStr.append("\n");
         }   
         return mazeStr.toString();
     }
 
-    public boolean isPassage(int val){
-        return val == 1;
+    public boolean isPassage(Cell cell) {
+        return cell == Cell.PASSAGE;
     }
 
     public boolean isPassage(Position pos) {
-        if(this.inBounds(pos)){
-            return maze.get(pos.getY()).get(pos.getX()) == 1; 
-        }else{
+        if (this.inBounds(pos)) {
+            // get Cell enum at the given position
+            Cell cell = maze.get(pos.getY()).get(pos.getX());
+            return cell == Cell.PASSAGE; 
+        } else {
             logger.error("Position out of bounds: " + pos);
             return false;
-        }       
+        }
     }
 
     public Position getEntry(){
@@ -139,7 +144,6 @@ public class Maze  {
             throw new IllegalArgumentException("Position out of bounds: " + pos);
         }
     }   
-
 
     public boolean checkPath(MazePath path){ 
         String pathStr = path.getExpanded();
