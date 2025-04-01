@@ -96,12 +96,13 @@ public class MazePath {
     // getFactorized converts the canonical path into a factorized format and returns factorized form
     public String getFactorized(){ 
         StringBuilder factorized = new StringBuilder("");
+        int i = 0;
 
-        for(int i = 0; i < path.length(); i++){
+        while(i < path.length()){
             char current = path.charAt(i);
-            int count = 0; // Count occurrences of the current instruction
+            int count = 1; // Count occurrences of the current instruction
 
-            while(i < path.length() && path.charAt(i) == current){
+            while((i+1) < path.length() && path.charAt(i+1) == current){
                 count++;
                 i++;
             }
@@ -109,9 +110,13 @@ public class MazePath {
             if(count > 1){
                 factorized.append(count);
             }
+            factorized.append(current);
 
-            factorized.append(current + " ");
-            i--;
+            if(i + 1 < path.length()){ // If not at last instruction
+                factorized.append(" ");
+            }
+
+            i++;
         } 
         return factorized.toString();
     }
