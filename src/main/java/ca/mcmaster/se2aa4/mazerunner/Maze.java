@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -128,7 +127,7 @@ public class Maze implements MazeNavigator {
 
         for (ArrayList<Cell> rows : maze) {
             for (Cell cell : rows) {
-                mazeStr.append(cell == Cell.PASSAGE ? " " : "#");
+                mazeStr.append(cell == Cell.PASSAGE ? "0" : "#");
             }
             mazeStr.append("\n");
         }   

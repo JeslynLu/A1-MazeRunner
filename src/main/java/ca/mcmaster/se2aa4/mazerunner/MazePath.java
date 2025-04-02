@@ -49,21 +49,28 @@ public class MazePath {
             char current = newPath.charAt(i);
             
             if(Character.isWhitespace(current)){ // ensures no spaces are added
-                expanded.append("");
             }
-            else if(Character.isDigit(current)){
-                int num = Character.getNumericValue(current); // digit value
-                char nextInstruct = newPath.charAt(i+1); // instruction after digit
 
-                for(int j = 0; j < num; j++){
-                    expanded.append(nextInstruct);
+            else if(Character.isDigit(current)){
+                int num = 0;
+                // getting digit value
+                while(i<newPath.length() && Character.isDigit(newPath.charAt(i))) {
+                    num = num * 10 + Character.getNumericValue(newPath.charAt(i));
+                    i++;
                 }
-                i++;
-            }
-            else{
+
+                if (i<newPath.length()) {
+                    char nextInstruct = newPath.charAt(i);
+    
+                    for (int j = 0; j < num; j++) {
+                        expanded.append(nextInstruct);
+                    }
+                }
+            } 
+            else {
                 expanded.append(current);
             }
-        } 
+        }
         return expanded.toString();
     }
 

@@ -1,6 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,14 +36,22 @@ public class PathValidator {
     public boolean checkPath(Position newEntry, Position newExit, Direction dir, String path){
         StringBuilder copyPath = new StringBuilder(path);
         Position currentPos = newEntry;
-        Position move = null;
+        int index = 0;
 
-        while(copyPath.length() > 0){
-            char instruct = copyPath.charAt(0); // get current instruction
+        while(index < path.length()){
+            char instruct = path.charAt(index); // get current instruction
 
             // executing given instructions
             if (instruct == 'F') {
-                move = currentPos.move(dir);
+                Position move = currentPos.move(dir);
+                // check if the move is valid - within bounds and is a passage
+                if(maze.inBounds(move) && maze.isPassage(move)){
+                    currentPos = move;
+                }
+                else{
+                    logger.error("Invalid move: " + move.toString() + " in direction " + dir);
+                    return false;
+                }  
             } 
             else if (instruct == 'L') {
                 dir = dir.turnLeft();
@@ -56,18 +63,10 @@ public class PathValidator {
                 logger.warn("Invalid instruction found: " + instruct);
                 return false;
             }
-
-            // check if the move is valid - within bounds and is a passage
-            if(maze.inBounds(move) && maze.isPassage(move)){
-                currentPos = move;
-                copyPath.deleteCharAt(0);
-            }
-            else{
-                logger.error("Invalid move: " + move.toString() + " in direction " + dir);
-                return false;
-            }  
+            index ++;
         }
 
+        logger.info("Current pos: "+ currentPos.toString());
         return currentPos.equals(newExit);
     }
 }

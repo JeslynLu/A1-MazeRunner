@@ -20,9 +20,8 @@ class MazePathTest {
 
     @Test
     void expandFactorized() {
-        MazePath path = new MazePath("4F 3R L");
+        MazePath path = new MazePath("5F 3R L 6F R F L 10F");
 
-        assertEquals("FFFF RRR L", path.getCanonical());
+        assertEquals("FFFFF RRR L FFFFFF R F L FFFFFFFFFF", path.getCanonical());
     }
-
 }
