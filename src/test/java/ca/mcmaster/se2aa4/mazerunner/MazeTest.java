@@ -52,7 +52,6 @@ public class MazeTest {
         """
         #######\n#000000\n###0###\n#00000#\n###0###\n000000#\n#######
         """;
-
         assertEquals(expectedMaze, maze.toString());
     }
 
