@@ -1,10 +1,7 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.Coordinates;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * Jeslyn Lu
@@ -13,9 +10,8 @@ import org.apache.logging.log4j.Logger;
  */
 
 public class Position {
-    private static final Logger logger = LogManager.getLogger();
-    private int x; // x coord
-    private int y; // y coord
+    private final int x; // x coord
+    private final int y; // y coord
     private static final Map<Direction, Position> MOVES = new HashMap<>(); // direction to move in mapped with Position offsets
     static {
         MOVES.put(Direction.NORTH, new Position(0, -1));

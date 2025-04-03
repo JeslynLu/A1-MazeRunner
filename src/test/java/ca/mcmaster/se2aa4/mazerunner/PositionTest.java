@@ -3,6 +3,9 @@ package ca.mcmaster.se2aa4.mazerunner;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
+import ca.mcmaster.se2aa4.mazerunner.Coordinates.Direction;
+import ca.mcmaster.se2aa4.mazerunner.Coordinates.Position;
+
 public class PositionTest {
     @Test
     void move() {

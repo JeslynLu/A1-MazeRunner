@@ -1,4 +1,7 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.Solvers;
+
+import ca.mcmaster.se2aa4.mazerunner.Maze.MazeNavigator;
+import ca.mcmaster.se2aa4.mazerunner.Path.MazePath;
 
 /**
  * Jeslyn Lu

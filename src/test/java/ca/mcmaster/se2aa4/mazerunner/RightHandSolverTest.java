@@ -3,6 +3,11 @@ package ca.mcmaster.se2aa4.mazerunner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
+import ca.mcmaster.se2aa4.mazerunner.Maze.Maze;
+import ca.mcmaster.se2aa4.mazerunner.Path.MazePath;
+import ca.mcmaster.se2aa4.mazerunner.Solvers.RightHandSolver;
+import ca.mcmaster.se2aa4.mazerunner.Solvers.Solver;
+
 class RightHandSolverTest {
     @Test
     void solveSmall() throws Exception{

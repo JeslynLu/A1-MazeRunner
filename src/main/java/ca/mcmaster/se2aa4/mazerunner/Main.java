@@ -8,6 +8,12 @@ import org.apache.commons.cli.Options;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ca.mcmaster.se2aa4.mazerunner.Maze.Maze;
+import ca.mcmaster.se2aa4.mazerunner.Path.MazePath;
+import ca.mcmaster.se2aa4.mazerunner.Path.PathValidator;
+import ca.mcmaster.se2aa4.mazerunner.Solvers.RightHandSolver;
+import ca.mcmaster.se2aa4.mazerunner.Solvers.Solver;
+
 /**
  * Jeslyn Lu
  * lu196

@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
+import ca.mcmaster.se2aa4.mazerunner.Maze.Maze;
+import ca.mcmaster.se2aa4.mazerunner.Path.MazePath;
+import ca.mcmaster.se2aa4.mazerunner.Path.PathValidator;
+
 public class PathValidatorTest {
 
     @Test

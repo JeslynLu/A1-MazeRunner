@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ca.mcmaster.se2aa4.mazerunner.Coordinates.Position;
+import ca.mcmaster.se2aa4.mazerunner.Maze.Maze;
+
 public class MazeTest {
     private Maze maze;
     private String mazeFile;
