@@ -9,8 +9,9 @@ import org.apache.logging.log4j.Logger;
  * RightHandSolver implements Solver and uses the right-hand rule algorithm to solve a maze
  */
 
-public class RightHandSolver implements Solver {
+public class RightHandSolver extends Subject implements Solver {
     private static final Logger logger = LogManager.getLogger(Maze.class);
+    private int state;
 
     // solve solves the given maze using the right-hand rule algorithm to return the solution path
     public MazePath solve(MazeNavigator maze){
@@ -45,5 +46,14 @@ public class RightHandSolver implements Solver {
             logger.debug("Current Pos: " + currentPos.toString() + "\n Path: " + path.getCanonical() + "\n");
         }
         return path;
+    }
+
+    public int getState(){
+        return this.state;
+    }
+
+    public void setState(int state){
+        this.state = state;
+        this.notifyAllObservers();
     }
 }

@@ -1,5 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Jeslyn Lu
@@ -14,7 +15,7 @@ public enum Direction{ // direction you are facing
         SOUTH;
 
     // stores the result of turning right for each direction
-    private static final HashMap<Direction, Direction> rightTurns = new HashMap<>();
+    private static final Map<Direction, Direction> rightTurns = new HashMap<>();
     static {
         rightTurns.put(NORTH, EAST); 
         rightTurns.put(EAST, SOUTH); 
@@ -23,7 +24,7 @@ public enum Direction{ // direction you are facing
     }
 
     // stores the result of turning left
-    private static final HashMap<Direction, Direction> leftTurns = new HashMap<>();
+    private static final Map<Direction, Direction> leftTurns = new HashMap<>();
     static {
         leftTurns.put(NORTH, WEST);  
         leftTurns.put(EAST, NORTH);  
