@@ -12,5 +12,4 @@ public interface MazeNavigator {
     Position getEntry();
     Position getExit();
     boolean isValid(Position pos);
-    boolean isPassage(Position pos); // TRY REMOVING THIS LATER
 }

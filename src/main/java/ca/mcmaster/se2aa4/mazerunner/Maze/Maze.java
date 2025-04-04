@@ -32,33 +32,34 @@ public class Maze implements MazeNavigator {
     }
 
     //  parseMaze returns 2D list with extracted maze walls and passages from inputted maze file
-    public ArrayList<ArrayList<Cell>> parseMaze(String filePath) throws Exception{
+    private ArrayList<ArrayList<Cell>> parseMaze(String filePath) throws Exception{
         logger.info("**** Reading the maze from file " + filePath);  
         ArrayList<ArrayList<Cell>> parsedMaze = new ArrayList<>();
 
-        BufferedReader reader = new BufferedReader(new FileReader(filePath)); // reads from retreived file
-        String line;
-        while ((line = reader.readLine()) != null) {
-            ArrayList<Cell> mazeRow = new ArrayList<>();
-
-            for (int idx = 0; idx < line.length(); idx++) {
-                if (line.charAt(idx) == '#') {
-                    mazeRow.add(Cell.WALL); // wall
-                } else if (line.charAt(idx) == ' ') {
-                    mazeRow.add(Cell.PASSAGE); // passage
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath)) // reads from retreived file
+        ) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                ArrayList<Cell> mazeRow = new ArrayList<>();
+                
+                for (int idx = 0; idx < line.length(); idx++) {
+                    if (line.charAt(idx) == '#') {
+                        mazeRow.add(Cell.WALL); // wall
+                    } else if (line.charAt(idx) == ' ') {
+                        mazeRow.add(Cell.PASSAGE); // passage
+                    }
                 }
-            }
-
-            // ensure row meets required length after parsing
-            if (!parsedMaze.isEmpty() && mazeRow.size() < parsedMaze.get(0).size()) {
-                int requiredLen = parsedMaze.get(0).size();
-                while (mazeRow.size() < requiredLen) {
-                    mazeRow.add(Cell.PASSAGE); // fill missing spaces with passages
+                
+                // ensure row meets required length after parsing
+                if (!parsedMaze.isEmpty() && mazeRow.size() < parsedMaze.get(0).size()) {
+                    int requiredLen = parsedMaze.get(0).size();
+                    while (mazeRow.size() < requiredLen) {
+                        mazeRow.add(Cell.PASSAGE); // fill missing spaces with passages
+                    }
                 }
+                parsedMaze.add(mazeRow);
             }
-            parsedMaze.add(mazeRow);
         }
-        reader.close();
         return parsedMaze;
     }
 
@@ -74,7 +75,7 @@ public class Maze implements MazeNavigator {
                 break;
             }
         }
-        logger.info("Found entrance at position: (" + pos.getX() + "," + pos.getY() + ")");
+        logger.info("Found entrance at " + pos.toString());
         return pos;
     }
 
@@ -91,15 +92,16 @@ public class Maze implements MazeNavigator {
                 break;
             }
         }
-        logger.info("Found exit at position: (" + pos.getX() + "," + pos.getY() + ")");
+        logger.info("Found exit at " + pos.toString());
         return pos;
     }
 
     // isPassage checks if a given cell is a passage
-    public boolean isPassage(Cell cell) {
+    private boolean isPassage(Cell cell) {
         return cell == Cell.PASSAGE;
     }
 
+    @Override
     public boolean isValid(Position pos){
         return isPassage(pos) && inBounds(pos);
     }

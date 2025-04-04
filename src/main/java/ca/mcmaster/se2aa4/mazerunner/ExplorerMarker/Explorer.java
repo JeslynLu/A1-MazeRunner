@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.ExplorerMarker;
 
 import ca.mcmaster.se2aa4.mazerunner.Coordinates.Direction;
 import ca.mcmaster.se2aa4.mazerunner.Coordinates.Position;

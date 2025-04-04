@@ -15,43 +15,43 @@ public enum Direction{ // direction you are facing
         SOUTH;
 
     // stores the result of turning right for each direction
-    private static final Map<Direction, Direction> rightTurns = new HashMap<>();
+    private static final Map<Direction, Direction> RIGHT_TURNS = new HashMap<>();
     static {
-        rightTurns.put(NORTH, EAST); 
-        rightTurns.put(EAST, SOUTH); 
-        rightTurns.put(SOUTH, WEST); 
-        rightTurns.put(WEST, NORTH); 
+        RIGHT_TURNS.put(NORTH, EAST); 
+        RIGHT_TURNS.put(EAST, SOUTH); 
+        RIGHT_TURNS.put(SOUTH, WEST); 
+        RIGHT_TURNS.put(WEST, NORTH); 
     }
 
     // stores the result of turning left
-    private static final Map<Direction, Direction> leftTurns = new HashMap<>();
+    private static final Map<Direction, Direction> LEFT_TURNS = new HashMap<>();
     static {
-        leftTurns.put(NORTH, WEST);  
-        leftTurns.put(EAST, NORTH);  
-        leftTurns.put(SOUTH, EAST);  
-        leftTurns.put(WEST, SOUTH);  
+        LEFT_TURNS.put(NORTH, WEST);  
+        LEFT_TURNS.put(EAST, NORTH);  
+        LEFT_TURNS.put(SOUTH, EAST);  
+        LEFT_TURNS.put(WEST, SOUTH);  
     }
 
-    private static final Map<Direction, Direction> backTurns = new HashMap<>();
+    private static final Map<Direction, Direction> BACK_TURNS = new HashMap<>();
     static {
-        backTurns.put(NORTH, SOUTH);  
-        backTurns.put(EAST, WEST);  
-        backTurns.put(SOUTH, NORTH);  
-        backTurns.put(WEST, EAST);  
+        BACK_TURNS.put(NORTH, SOUTH);  
+        BACK_TURNS.put(EAST, WEST);  
+        BACK_TURNS.put(SOUTH, NORTH);  
+        BACK_TURNS.put(WEST, EAST);  
     }
 
     // turnRight returns the direction you would face after turning right
     public Direction turnRight() {
-        return rightTurns.get(this); 
+        return RIGHT_TURNS.get(this); 
     }
 
     // turnLeft returns the direction after turning left
     public Direction turnLeft() {
-        return leftTurns.get(this);
+        return LEFT_TURNS.get(this);
     }
 
     public Direction turnBack() {
-        return backTurns.get(this);
+        return BACK_TURNS.get(this);
     }
 }
     

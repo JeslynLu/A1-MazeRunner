@@ -1,20 +1,17 @@
 package ca.mcmaster.se2aa4.mazerunner.Solvers;
 
-import java.util.Stack;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ca.mcmaster.se2aa4.mazerunner.Explorer;
+import ca.mcmaster.se2aa4.mazerunner.Coordinates.Position;
+import ca.mcmaster.se2aa4.mazerunner.ExplorerMarker.Explorer;
+import ca.mcmaster.se2aa4.mazerunner.ExplorerMarker.ExplorerManager;
 import ca.mcmaster.se2aa4.mazerunner.Maze.MazeNavigator;
-import ca.mcmaster.se2aa4.mazerunner.MoveCommands.Command;
-import ca.mcmaster.se2aa4.mazerunner.MoveCommands.CommandHistory;
 import ca.mcmaster.se2aa4.mazerunner.MoveCommands.ForwardCommand;
 import ca.mcmaster.se2aa4.mazerunner.MoveCommands.TurnLeftCommand;
 import ca.mcmaster.se2aa4.mazerunner.MoveCommands.TurnRightCommand;
 import ca.mcmaster.se2aa4.mazerunner.Path.MazePath;
 import ca.mcmaster.se2aa4.mazerunner.Subject;
-import ca.mcmaster.se2aa4.mazerunner.Coordinates.Position;
 
 /**
  * Jeslyn Lu
@@ -24,28 +21,14 @@ import ca.mcmaster.se2aa4.mazerunner.Coordinates.Position;
 
 public class RightHandSolver extends Subject implements Solver {
     private static final Logger logger = LogManager.getLogger(RightHandSolver.class);
-    private CommandHistory history = new CommandHistory();
     private int state;
-
-    public void executeCommand(Command command){
-        command.execute();
-        history.push(command);
-    }
-
-    public void undo() {
-        if (history.isEmpty()) {
-            return;
-        }
-        Command prevMove = history.pop();
-        if (prevMove != null) {
-            prevMove.undo();
-        }
-    }
 
     // solve solves the given maze using the right-hand rule algorithm to return the solution path
     @Override
-    public MazePath solve(MazeNavigator maze, Explorer explorer){
+    public MazePath solve(MazeNavigator maze){
         MazePath path = new MazePath();
+        Explorer explorer = new Explorer(maze.getEntry());
+        ExplorerManager explorerManager= new ExplorerManager();
         Position currentPos = explorer.getPosition();
 
         while(!currentPos.equals(maze.getExit())){
@@ -54,21 +37,21 @@ public class RightHandSolver extends Subject implements Solver {
             Position rightTurnPos = explorer.getNextRightTurnPosition();
 
             // if can move forward and supported by a wall on its right
-            if(maze.isPassage(forwardPos) && !maze.isPassage(rightTurnPos)){
-                executeCommand(new ForwardCommand(explorer));
+            if(maze.isValid(forwardPos) && !maze.isValid(rightTurnPos)){
+                explorerManager.executeCommand(new ForwardCommand(explorer));
                 path.addInstruct("F");
             } 
 
             // if can turn right and move forward
-            else if(maze.isPassage(rightTurnPos)){
-                executeCommand(new TurnRightCommand(explorer));
-                executeCommand(new ForwardCommand(explorer));
+            else if(maze.isValid(rightTurnPos)){
+                explorerManager.executeCommand(new TurnRightCommand(explorer));
+                explorerManager.executeCommand(new ForwardCommand(explorer));
                 path.addInstruct("R");
                 path.addInstruct("F");
             }
 
             else{
-                executeCommand(new TurnLeftCommand(explorer));
+                explorerManager.executeCommand(new TurnLeftCommand(explorer));
                 path.addInstruct("L");
             }
             logger.debug("Current Pos: " + currentPos.toString());

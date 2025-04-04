@@ -1,6 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner.Solvers;
 
-import ca.mcmaster.se2aa4.mazerunner.Explorer;
 import ca.mcmaster.se2aa4.mazerunner.Maze.MazeNavigator;
 import ca.mcmaster.se2aa4.mazerunner.Path.MazePath;
 
@@ -12,5 +11,5 @@ import ca.mcmaster.se2aa4.mazerunner.Path.MazePath;
 
 public interface Solver {
     // solve solves the given maze and returns the path taken
-    MazePath solve(MazeNavigator maze, Explorer explorer);   
+    MazePath solve(MazeNavigator maze);   
 } 

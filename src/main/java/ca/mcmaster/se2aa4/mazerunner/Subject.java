@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public abstract class Subject{
-    private List<Observer> observers = new ArrayList<Observer>();
+    private final List<Observer> observers = new ArrayList<Observer>();
 
     public void attach(Observer observer){
         this.observers.add(observer);
