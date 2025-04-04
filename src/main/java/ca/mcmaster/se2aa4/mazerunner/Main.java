@@ -61,8 +61,9 @@ public class Main {
                 logger.info("\n\n" + maze.toString());
 
                 Solver solver = chooseSolver();
-                MazePath path = solver.solve(maze);
-
+                Explorer explorer = new Explorer(maze);
+                logger.info("**** Solver chosen");
+                MazePath path = solver.solve(maze, explorer);
                 System.out.println(path.getFactorized());
             }
     

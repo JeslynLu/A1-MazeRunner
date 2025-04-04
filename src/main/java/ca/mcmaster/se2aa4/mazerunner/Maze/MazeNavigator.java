@@ -11,6 +11,6 @@ import ca.mcmaster.se2aa4.mazerunner.Coordinates.Position;
 public interface MazeNavigator {
     Position getEntry();
     Position getExit();
-    boolean isPassage(Position pos);
-    boolean inBounds(Position pos);
+    boolean isValid(Position pos);
+    boolean isPassage(Position pos); // TRY REMOVING THIS LATER
 }

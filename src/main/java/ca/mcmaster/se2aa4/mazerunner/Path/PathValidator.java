@@ -15,7 +15,7 @@ import ca.mcmaster.se2aa4.mazerunner.Maze.MazeNavigator;
 
 public class PathValidator {
     private static final Logger logger = LogManager.getLogger();
-    private MazeNavigator maze; // maze to check path for
+    private final MazeNavigator maze; // maze to check path for
 
     public PathValidator(MazeNavigator maze){
         this.maze = maze;
@@ -38,7 +38,6 @@ public class PathValidator {
 
     // checkPath returns if given path is valid from a specific entry to exit with a given direction
     public boolean checkPath(Position newEntry, Position newExit, Direction dir, String path){
-        StringBuilder copyPath = new StringBuilder(path);
         Position currentPos = newEntry;
         int index = 0;
 
@@ -49,7 +48,7 @@ public class PathValidator {
             if (instruct == 'F') {
                 Position move = currentPos.move(dir);
                 // check if the move is valid - within bounds and is a passage
-                if(maze.inBounds(move) && maze.isPassage(move)){
+                if(maze.isValid(move)){
                     currentPos = move;
                 }
                 else{
@@ -69,8 +68,7 @@ public class PathValidator {
             }
             index ++;
         }
-
-        logger.info("Current pos: "+ currentPos.toString());
+        logger.info("Current position: "+ currentPos.toString());
         return currentPos.equals(newExit);
     }
 }

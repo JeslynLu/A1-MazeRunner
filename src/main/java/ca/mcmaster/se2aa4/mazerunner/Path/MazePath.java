@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 public class MazePath {
     private static final Logger logger = LogManager.getLogger();
-    private StringBuilder path; // sequence of instructions
+    private final StringBuilder path; // sequence of instructions
 
     public MazePath(){
         this.path = new StringBuilder("");
