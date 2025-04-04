@@ -1,6 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner.MoveCommands;
 
-import ca.mcmaster.se2aa4.mazerunner.ExplorerMarker.Explorer;
+import ca.mcmaster.se2aa4.mazerunner.MazeExplorer.Explorer;
 
 public class ForwardCommand extends Command{
 

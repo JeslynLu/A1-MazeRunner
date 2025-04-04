@@ -13,10 +13,6 @@ public class MazePath {
     private static final Logger logger = LogManager.getLogger();
     private final StringBuilder path; // sequence of instructions
 
-    public MazePath(){
-        this.path = new StringBuilder("");
-    }
-
     // Constructor cleans up and validates the input format
     public MazePath(String newPath){
         String cleanPath = expandFactorized(newPath); // cleaning up path input
@@ -54,7 +50,7 @@ public class MazePath {
             else if(Character.isDigit(current)){
                 int num = 0;
                 // getting digit value
-                while(i<newPath.length() && Character.isDigit(newPath.charAt(i))) {
+                while(i < newPath.length() && Character.isDigit(newPath.charAt(i))) {
                     num = num * 10 + Character.getNumericValue(newPath.charAt(i));
                     i++;
                 }
@@ -128,13 +124,4 @@ public class MazePath {
         return factorized.toString();
     }
 
-    // addInstruct adds inputted instruction onto end of path
-    public void addInstruct(String instruct){
-        path.append(instruct);
-    }
-
-    // getInstruct returns first instruction of path
-    public char getInstruct(){
-        return this.path.charAt(0);
-    }
 }

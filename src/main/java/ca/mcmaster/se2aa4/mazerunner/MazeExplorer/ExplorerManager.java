@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.mazerunner.ExplorerMarker;
+package ca.mcmaster.se2aa4.mazerunner.MazeExplorer;
 
 import ca.mcmaster.se2aa4.mazerunner.MoveCommands.Command;
 import ca.mcmaster.se2aa4.mazerunner.MoveCommands.CommandHistory;

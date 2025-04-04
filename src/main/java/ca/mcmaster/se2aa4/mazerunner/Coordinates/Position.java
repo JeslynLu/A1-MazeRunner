@@ -1,6 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner.Coordinates;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,13 +11,12 @@ import java.util.Map;
 public class Position {
     private final int x; // x coord
     private final int y; // y coord
-    private static final Map<Direction, Position> MOVES = new HashMap<>(); // direction to move in mapped with Position offsets
-    static {
-        MOVES.put(Direction.NORTH, new Position(0, -1));
-        MOVES.put(Direction.EAST, new Position(1, 0));
-        MOVES.put(Direction.WEST, new Position(-1, 0));
-        MOVES.put(Direction.SOUTH, new Position(0, 1));
-    }
+    private static final Map<Direction, Position> MOVES = Map.of( // direction to move in mapped with Position offsets
+        Direction.NORTH, new Position(0, -1),
+        Direction.EAST, new Position(1, 0),
+        Direction.WEST, new Position(-1, 0),
+        Direction.SOUTH, new Position(0, 1)
+    );
     
     public Position(int x, int y) {
         this.x = x;

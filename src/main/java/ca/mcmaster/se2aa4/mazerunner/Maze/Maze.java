@@ -17,7 +17,6 @@ import ca.mcmaster.se2aa4.mazerunner.Coordinates.Position;
 
 public class Maze implements MazeNavigator {
     private static final Logger logger = LogManager.getLogger(Maze.class);
-
     private ArrayList<ArrayList<Cell>> maze = new ArrayList<>(); // 2D list to represent a maze
     private final Position entry; // maze entrance
     private final Position exit; // maze exit

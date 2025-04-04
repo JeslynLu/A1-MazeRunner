@@ -15,30 +15,27 @@ public enum Direction{ // direction you are facing
         SOUTH;
 
     // stores the result of turning right for each direction
-    private static final Map<Direction, Direction> RIGHT_TURNS = new HashMap<>();
-    static {
-        RIGHT_TURNS.put(NORTH, EAST); 
-        RIGHT_TURNS.put(EAST, SOUTH); 
-        RIGHT_TURNS.put(SOUTH, WEST); 
-        RIGHT_TURNS.put(WEST, NORTH); 
-    }
+    private static final Map<Direction, Direction> RIGHT_TURNS = Map.of(
+        NORTH, EAST,
+        EAST, SOUTH,
+        SOUTH, WEST,
+        WEST, NORTH
+    );
 
     // stores the result of turning left
-    private static final Map<Direction, Direction> LEFT_TURNS = new HashMap<>();
-    static {
-        LEFT_TURNS.put(NORTH, WEST);  
-        LEFT_TURNS.put(EAST, NORTH);  
-        LEFT_TURNS.put(SOUTH, EAST);  
-        LEFT_TURNS.put(WEST, SOUTH);  
-    }
+    private static final Map<Direction, Direction> LEFT_TURNS = Map.of(
+        NORTH, WEST, 
+        EAST, NORTH,
+        SOUTH, EAST,
+        WEST, SOUTH  
+    );
 
-    private static final Map<Direction, Direction> BACK_TURNS = new HashMap<>();
-    static {
-        BACK_TURNS.put(NORTH, SOUTH);  
-        BACK_TURNS.put(EAST, WEST);  
-        BACK_TURNS.put(SOUTH, NORTH);  
-        BACK_TURNS.put(WEST, EAST);  
-    }
+    private static final Map<Direction, Direction> BACK_TURNS = Map.of(
+        NORTH, SOUTH, 
+        EAST, WEST,
+        SOUTH, NORTH, 
+        WEST, EAST 
+    );
 
     // turnRight returns the direction you would face after turning right
     public Direction turnRight() {
