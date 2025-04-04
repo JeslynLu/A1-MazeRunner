@@ -32,6 +32,14 @@ public enum Direction{ // direction you are facing
         leftTurns.put(WEST, SOUTH);  
     }
 
+    private static final Map<Direction, Direction> backTurns = new HashMap<>();
+    static {
+        backTurns.put(NORTH, SOUTH);  
+        backTurns.put(EAST, WEST);  
+        backTurns.put(SOUTH, NORTH);  
+        backTurns.put(WEST, EAST);  
+    }
+
     // turnRight returns the direction you would face after turning right
     public Direction turnRight() {
         return rightTurns.get(this); 
@@ -40,6 +48,10 @@ public enum Direction{ // direction you are facing
     // turnLeft returns the direction after turning left
     public Direction turnLeft() {
         return leftTurns.get(this);
+    }
+
+    public Direction turnBack() {
+        return backTurns.get(this);
     }
 }
     

@@ -2,19 +2,19 @@ package ca.mcmaster.se2aa4.mazerunner.MoveCommands;
 
 import ca.mcmaster.se2aa4.mazerunner.Explorer;
 
-public class ForwardCommand extends Command{
+public class TurnLeftCommand extends Command{
 
-    public ForwardCommand(Explorer explorer) {
+    public TurnLeftCommand(Explorer explorer) {
         super(explorer);
     }
 
     @Override
     public void execute(){
-        explorer.moveForward();
+        explorer.turnLeft();
     }
 
     @Override
     public void undo(){
-        explorer.moveBackward();
+        explorer.turnRight();
     }
 }

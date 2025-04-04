@@ -100,12 +100,10 @@ public class Maze implements MazeNavigator {
         return cell == Cell.PASSAGE;
     }
 
-    @Override
     public boolean isValid(Position pos){
         return isPassage(pos) && inBounds(pos);
     }
 
-    @Override
     public boolean isPassage(Position pos) {
         if (this.inBounds(pos)) {
             // get Cell enum at the given position

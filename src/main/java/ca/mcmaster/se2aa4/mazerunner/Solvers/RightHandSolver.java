@@ -5,15 +5,16 @@ import java.util.Stack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ca.mcmaster.se2aa4.mazerunner.Coordinates.Direction;
-import ca.mcmaster.se2aa4.mazerunner.Coordinates.Position;
 import ca.mcmaster.se2aa4.mazerunner.Explorer;
 import ca.mcmaster.se2aa4.mazerunner.Maze.MazeNavigator;
 import ca.mcmaster.se2aa4.mazerunner.MoveCommands.Command;
+import ca.mcmaster.se2aa4.mazerunner.MoveCommands.CommandHistory;
 import ca.mcmaster.se2aa4.mazerunner.MoveCommands.ForwardCommand;
-import ca.mcmaster.se2aa4.mazerunner.MoveCommands.TurnCommand;
+import ca.mcmaster.se2aa4.mazerunner.MoveCommands.TurnLeftCommand;
+import ca.mcmaster.se2aa4.mazerunner.MoveCommands.TurnRightCommand;
 import ca.mcmaster.se2aa4.mazerunner.Path.MazePath;
 import ca.mcmaster.se2aa4.mazerunner.Subject;
+import ca.mcmaster.se2aa4.mazerunner.Coordinates.Position;
 
 /**
  * Jeslyn Lu
@@ -23,49 +24,55 @@ import ca.mcmaster.se2aa4.mazerunner.Subject;
 
 public class RightHandSolver extends Subject implements Solver {
     private static final Logger logger = LogManager.getLogger(RightHandSolver.class);
-    private Stack<Command> commandHistory = new Stack<>();
+    private CommandHistory history = new CommandHistory();
     private int state;
 
     public void executeCommand(Command command){
         command.execute();
-        commandHistory.push(command);
+        history.push(command);
+    }
+
+    public void undo() {
+        if (history.isEmpty()) {
+            return;
+        }
+        Command prevMove = history.pop();
+        if (prevMove != null) {
+            prevMove.undo();
+        }
     }
 
     // solve solves the given maze using the right-hand rule algorithm to return the solution path
     @Override
     public MazePath solve(MazeNavigator maze, Explorer explorer){
-        Position currentPos = explorer.getPosition();
-        logger.debug("Current Pos: " + currentPos.toString());
-        Direction dir = explorer.getDirection();
-        logger.debug("Current Dir: " + dir.toString());
         MazePath path = new MazePath();
+        Position currentPos = explorer.getPosition();
 
         while(!currentPos.equals(maze.getExit())){
             // temporary positions for turning and moving forward
-            Position forwardPos = currentPos.move(dir);
-            Position rightTurnPos = currentPos.move(dir.turnRight());
+            Position forwardPos = explorer.getNextForwardPosition();
+            Position rightTurnPos = explorer.getNextRightTurnPosition();
 
             // if can move forward and supported by a wall on its right
             if(maze.isPassage(forwardPos) && !maze.isPassage(rightTurnPos)){
-                executeCommand(new ForwardCommand(explorer, forwardPos));
+                executeCommand(new ForwardCommand(explorer));
                 path.addInstruct("F");
             } 
 
             // if can turn right and move forward
             else if(maze.isPassage(rightTurnPos)){
-                executeCommand(new TurnCommand(explorer, dir.turnRight()));
-                executeCommand(new ForwardCommand(explorer, rightTurnPos));
+                executeCommand(new TurnRightCommand(explorer));
+                executeCommand(new ForwardCommand(explorer));
                 path.addInstruct("R");
                 path.addInstruct("F");
             }
 
             else{
-                executeCommand(new TurnCommand(explorer, dir.turnLeft()));
+                executeCommand(new TurnLeftCommand(explorer));
                 path.addInstruct("L");
             }
-            logger.debug("Current Pos: " + currentPos.toString() + "\n Path: " + path.getCanonical() + "\n");
+            logger.debug("Current Pos: " + currentPos.toString());
             currentPos = explorer.getPosition();
-            dir = explorer.getDirection();
         }
         return path;
     }
