@@ -71,10 +71,10 @@ public class Maze implements MazeNavigator {
             
             if(isPassage(cell)){
                 pos = new Position(0, i);
+                logger.info("Found entrance at " + pos.toString());
                 break;
             }
         }
-        logger.info("Found entrance at " + pos.toString());
         return pos;
     }
 
@@ -88,10 +88,10 @@ public class Maze implements MazeNavigator {
 
             if (isPassage(cell)) {
                 pos = new Position(mazeWidth, i);
+                logger.info("Found exit at " + pos.toString());
                 break;
             }
         }
-        logger.info("Found exit at " + pos.toString());
         return pos;
     }
 

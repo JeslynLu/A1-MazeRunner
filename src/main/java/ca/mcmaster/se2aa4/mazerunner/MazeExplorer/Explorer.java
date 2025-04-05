@@ -7,35 +7,36 @@ import ca.mcmaster.se2aa4.mazerunner.Coordinates.Position;
 public class Explorer extends Subject {
     private Direction dir;
     private Position pos;
-    private ExplorerState state;
+    private MovementState state;
 
     public Explorer(Position startPos){
         this.dir = Direction.EAST; // assuming entry on always on West border
         this.pos = startPos;
     }
 
+    @Override
     public String getState(){
         return this.state.getStateStr();
     }
 
-    public void setState(ExplorerState state){
+    public void setState(MovementState state){
         this.state = state;
         this.notifyAllObservers();
     }
  
     public void moveForward() {
         this.pos = pos.move(dir);
-        setState(ExplorerState.MOVING_FORWARD);
+        setState(MovementState.MOVING_FORWARD);
     }
 
     public void turnLeft() {
         this.dir = dir.turnLeft();
-        setState(ExplorerState.TURNING_LEFT);
+        setState(MovementState.TURNING_LEFT);
     }
 
     public void turnRight() {
         this.dir = dir.turnRight();
-        setState(ExplorerState.TURNING_RIGHT);
+        setState(MovementState.TURNING_RIGHT);
     }
 
     public void moveBackward() {

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import ca.mcmaster.se2aa4.mazerunner.Maze.Maze;
-import ca.mcmaster.se2aa4.mazerunner.Path.MazePath;
+import ca.mcmaster.se2aa4.mazerunner.Path.PathFormatter;
 import ca.mcmaster.se2aa4.mazerunner.Solvers.RightHandSolver;
 import ca.mcmaster.se2aa4.mazerunner.Solvers.Solver;
 
@@ -12,7 +12,7 @@ class RightHandSolverTest {
     String initialize(String filePath) throws Exception{
         Maze maze = new Maze(filePath);
         Solver solver = new RightHandSolver();
-        MazePath actualPath = solver.solve(maze);
+        PathFormatter actualPath = solver.solve(maze);
         return actualPath.getFactorized();
     }
 

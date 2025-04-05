@@ -1,5 +1,4 @@
 package ca.mcmaster.se2aa4.mazerunner.Coordinates;
-import java.util.HashMap;
 import java.util.Map;
 
 /**

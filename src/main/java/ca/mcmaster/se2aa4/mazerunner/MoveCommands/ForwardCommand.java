@@ -2,10 +2,11 @@ package ca.mcmaster.se2aa4.mazerunner.MoveCommands;
 
 import ca.mcmaster.se2aa4.mazerunner.MazeExplorer.Explorer;
 
-public class ForwardCommand extends Command{
+public class ForwardCommand implements Command{
+    private final Explorer explorer;
 
     public ForwardCommand(Explorer explorer) {
-        super(explorer);
+        this.explorer = explorer;
     }
 
     @Override

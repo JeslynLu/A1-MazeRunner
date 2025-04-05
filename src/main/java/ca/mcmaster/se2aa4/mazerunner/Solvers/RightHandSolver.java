@@ -10,7 +10,7 @@ import ca.mcmaster.se2aa4.mazerunner.MazeExplorer.ExplorerManager;
 import ca.mcmaster.se2aa4.mazerunner.MoveCommands.ForwardCommand;
 import ca.mcmaster.se2aa4.mazerunner.MoveCommands.TurnLeftCommand;
 import ca.mcmaster.se2aa4.mazerunner.MoveCommands.TurnRightCommand;
-import ca.mcmaster.se2aa4.mazerunner.Path.MazePath;
+import ca.mcmaster.se2aa4.mazerunner.Path.PathFormatter;
 import ca.mcmaster.se2aa4.mazerunner.Path.PathWriter;
 
 /**
@@ -24,7 +24,7 @@ public class RightHandSolver implements Solver {
 
     // solve solves the given maze using the right-hand rule algorithm to return the solution path
     @Override
-    public MazePath solve(MazeNavigator maze){
+    public PathFormatter solve(MazeNavigator maze){
         Explorer explorer = new Explorer(maze.getEntry());
         PathWriter pathWriter = new PathWriter(explorer);
         ExplorerManager explorerManager= new ExplorerManager();

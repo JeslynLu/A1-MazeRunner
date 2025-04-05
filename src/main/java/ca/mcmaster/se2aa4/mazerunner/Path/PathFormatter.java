@@ -9,32 +9,14 @@ import org.apache.logging.log4j.Logger;
  * MazePath represents a path through the maze using a sequence of movement instructions
  */
 
-public class MazePath {
+public class PathFormatter {
     private static final Logger logger = LogManager.getLogger();
     private final StringBuilder path; // sequence of instructions
 
     // Constructor cleans up and validates the input format
-    public MazePath(String newPath){
+    public PathFormatter(String newPath){
         String cleanPath = expandFactorized(newPath); // cleaning up path input
-        pathFormatCheck(cleanPath); // ensuring path input format is valid
         this.path = new StringBuilder(cleanPath);
-    }
-
-    // pathFormatCheck returns if only valid instructions are in inputted string
-    public boolean pathFormatCheck(String newPath){
-        if(newPath.equals("")){
-            logger.error("Path cannot be empty.");
-            return false;
-        }
-        // ensuring path characters are valid ones
-        for(int i = 0; i < newPath.length(); i++){
-            char instruct = newPath.charAt(i);
-            if(instruct != ' ' && instruct != 'F' && instruct != 'L' && instruct != 'R'){
-                logger.error("\"" + instruct + "\" is not a valid path instruction.");
-                return false;
-            }
-        }
-        return true;
     }
 
     // expandFactorized expands a factorized path string into a normal form

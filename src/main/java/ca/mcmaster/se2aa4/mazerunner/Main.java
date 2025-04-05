@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ca.mcmaster.se2aa4.mazerunner.Maze.Maze;
-import ca.mcmaster.se2aa4.mazerunner.Path.MazePath;
+import ca.mcmaster.se2aa4.mazerunner.Path.PathFormatter;
 import ca.mcmaster.se2aa4.mazerunner.Path.PathValidator;
 import ca.mcmaster.se2aa4.mazerunner.Solvers.RightHandSolver;
 import ca.mcmaster.se2aa4.mazerunner.Solvers.Solver;
@@ -44,7 +44,7 @@ public class Main {
             if(cmd.getOptionValue("p")!= null){ // verifying inputted path only
                 logger.info("Validating maze path");
                 
-                MazePath pathToCheck = new MazePath(cmd.getOptionValue("p"));
+                String pathToCheck = cmd.getOptionValue("p");
                 PathValidator validator = new PathValidator(maze);
                 boolean validPath = validator.checkPath(pathToCheck);
 
@@ -62,7 +62,7 @@ public class Main {
 
                 Solver solver = chooseSolver();
                 logger.info("**** Solver chosen");
-                MazePath path = solver.solve(maze);
+                PathFormatter path = solver.solve(maze);
                 System.out.println(path.getFactorized());
             }
     

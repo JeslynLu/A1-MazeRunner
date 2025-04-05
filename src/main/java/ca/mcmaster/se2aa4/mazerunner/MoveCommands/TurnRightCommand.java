@@ -2,10 +2,11 @@ package ca.mcmaster.se2aa4.mazerunner.MoveCommands;
 
 import ca.mcmaster.se2aa4.mazerunner.MazeExplorer.Explorer;
 
-public class TurnRightCommand extends Command{
+public class TurnRightCommand implements Command{
+    private final Explorer explorer;
 
     public TurnRightCommand(Explorer explorer) {
-        super(explorer);
+        this.explorer = explorer;
     }
 
     @Override

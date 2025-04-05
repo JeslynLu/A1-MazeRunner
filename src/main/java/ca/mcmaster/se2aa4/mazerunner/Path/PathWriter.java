@@ -2,11 +2,11 @@ package ca.mcmaster.se2aa4.mazerunner.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.mcmaster.se2aa4.mazerunner.MazeExplorer.ExplorerObserver;
+import ca.mcmaster.se2aa4.mazerunner.MazeExplorer.MovementObserver;
 import ca.mcmaster.se2aa4.mazerunner.MazeExplorer.Subject;
 
 
-public class PathWriter implements ExplorerObserver{
+public class PathWriter implements MovementObserver{
     private List<String> path = new ArrayList<>();
     private Subject subject;
 
@@ -25,12 +25,12 @@ public class PathWriter implements ExplorerObserver{
         this.addInstruct(this.subject.getState());
     }
 
-    public MazePath getPath(){
+    public PathFormatter getPath(){
         StringBuilder pathString = new StringBuilder("");
         for(String c : path){
             pathString.append(c);
         }
-        return new MazePath(pathString.toString());
+        return new PathFormatter(pathString.toString());
     }
 
 }

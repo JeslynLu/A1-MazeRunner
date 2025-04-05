@@ -1,20 +1,20 @@
 package ca.mcmaster.se2aa4.mazerunner.MazeExplorer;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Subject{
-    private final List<ExplorerObserver> observers = new ArrayList<ExplorerObserver>();
+    private final List<MovementObserver> observers = new ArrayList<>();
 
-    public void attach(ExplorerObserver observer){
+    public void attach(MovementObserver observer){
         this.observers.add(observer);
     }
 
-    public void detach(ExplorerObserver observer){
+    public void detach(MovementObserver observer){
         this.observers.remove(observer);
     }
 
     public void notifyAllObservers() {
-        for(ExplorerObserver observer : this.observers) {
+        for(MovementObserver observer : this.observers) {
             observer.update();
         }
     }

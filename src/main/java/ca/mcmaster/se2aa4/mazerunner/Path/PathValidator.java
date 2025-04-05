@@ -22,8 +22,9 @@ public class PathValidator {
     }
 
     // checkPath returns if given path is valid by checking path with both possible entries (West and East)
-    public boolean checkPath(MazePath path){ 
-        String pathStr = path.getExpanded();
+    public boolean checkPath(String path){ 
+        PathFormatter formatter = new PathFormatter(path);
+        String pathStr = formatter.getExpanded();
         
         logger.info("Checking path: " + pathStr);
 
