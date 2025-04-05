@@ -3,7 +3,7 @@ package ca.mcmaster.se2aa4.mazerunner.Path;
 /**
  * Jeslyn Lu
  * lu196
- * MazePath represents a path through the maze using a sequence of movement instructions
+ * PathFormatter allows for the conversion between different path string outputs
  */
 
 public class PathFormatter {

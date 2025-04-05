@@ -10,7 +10,7 @@ import ca.mcmaster.se2aa4.mazerunner.Maze.MazeNavigator;
 /**
  * Jeslyn Lu
  * lu196
- * PathValidator represents a validator of whether a given path follows a valid route through the maze from an entry to an exit
+ * PathValidator represents a validator of whether a given path follows a valid route through the maze. from an entry to an exit
  */
 
 public class PathValidator {

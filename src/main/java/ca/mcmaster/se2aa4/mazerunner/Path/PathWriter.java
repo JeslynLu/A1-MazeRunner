@@ -5,6 +5,11 @@ import java.util.List;
 import ca.mcmaster.se2aa4.mazerunner.MazeExplorer.MovementObserver;
 import ca.mcmaster.se2aa4.mazerunner.MazeExplorer.Subject;
 
+/**
+ * Jeslyn Lu
+ * lu196
+ * PathWriter allows for creation of a path that represents a path through the maze using a sequence of movement instructions
+ */
 
 public class PathWriter implements MovementObserver{
     private final List<String> path = new ArrayList<>();

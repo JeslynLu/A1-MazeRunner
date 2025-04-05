@@ -12,7 +12,7 @@ import ca.mcmaster.se2aa4.mazerunner.Coordinates.Position;
 /**
  * Jeslyn Lu
  * lu196
- * Maze represents the structure of the maze, including its layout, passages, walls, entry, and exit points
+ * Maze represents the structure of the maze, including its layout, passages, walls, entry, and exit positions
  */
 
 public class Maze implements MazeNavigator {
