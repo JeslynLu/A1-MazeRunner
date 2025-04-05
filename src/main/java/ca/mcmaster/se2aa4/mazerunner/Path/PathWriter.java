@@ -7,8 +7,8 @@ import ca.mcmaster.se2aa4.mazerunner.MazeExplorer.Subject;
 
 
 public class PathWriter implements MovementObserver{
-    private List<String> path = new ArrayList<>();
-    private Subject subject;
+    private final List<String> path = new ArrayList<>();
+    private final Subject subject;
 
     public PathWriter(Subject subject){
         this.subject = subject;

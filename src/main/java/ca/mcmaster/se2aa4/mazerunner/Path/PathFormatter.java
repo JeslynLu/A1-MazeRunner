@@ -1,8 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner.Path;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 /**
  * Jeslyn Lu
  * lu196
@@ -10,11 +7,16 @@ import org.apache.logging.log4j.Logger;
  */
 
 public class PathFormatter {
-    private static final Logger logger = LogManager.getLogger();
-    private final StringBuilder path; // sequence of instructions
+    private StringBuilder path; // sequence of instructions
 
     // Constructor cleans up and validates the input format
     public PathFormatter(String newPath){
+        this.path = new StringBuilder();
+        initialize(newPath);
+        
+    }
+
+    private void initialize(String newPath){
         String cleanPath = expandFactorized(newPath); // cleaning up path input
         this.path = new StringBuilder(cleanPath);
     }

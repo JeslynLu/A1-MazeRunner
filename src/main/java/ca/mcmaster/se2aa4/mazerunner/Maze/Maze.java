@@ -63,7 +63,7 @@ public class Maze implements MazeNavigator {
     }
 
     //  findEntry returns entrance of maze - passage on the West border
-    public Position findEntry(){
+    private Position findEntry(){
         Position pos = null;
 
         for(int i = 0; i < maze.size(); i++){ // accessing first col, which is West border
@@ -79,7 +79,7 @@ public class Maze implements MazeNavigator {
     }
 
     //  findExit returns exit of maze - passage on the East border
-    public Position findExit(){
+    private Position findExit(){
         Position pos = null;
         int mazeWidth = this.maze.get(0).size() - 1;
 
